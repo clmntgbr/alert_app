@@ -1,4 +1,6 @@
+import 'package:alert_app/api_service.dart';
 import 'package:alert_app/app_theme.dart';
+import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/util/curve_painter.dart';
 import 'package:alert_app/util/hex_color.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
@@ -129,14 +131,46 @@ class AppState extends State<App> {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  ActiveStore activeStore = activeStoreInit();
+
+  @override
+  void initState() {
+    super.initState();
+
+    ApiService().getActiveStore().then((value) {
+      setState(() {
+        activeStore = value;
+      });
+    });
+  }
+
+  Color getStoreColor(int remainingPlaces) {
+    if (remainingPlaces < 75) {
+      return Colors.green;
+    } else if (remainingPlaces >= 75 && remainingPlaces <= 95) {
+      return Colors.orange;
+    } else if (remainingPlaces > 95) {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    int remainingPlaces = activeStore.maxItemPerStore - activeStore.itemsInStore;
+    var remainingPlacesColor = getStoreColor(activeStore.itemsInStore);
+
     return SingleChildScrollView(
       child: Padding(
-          padding: const EdgeInsets.only(top: 75, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 55, left: 16, right: 16),
           child: Container(
               decoration: BoxDecoration(
                 color: AppTheme.white,
@@ -174,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                                         children: <Widget>[
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4, bottom: 2),
-                                            child: Text('Eaten', textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.w900)),
+                                            child: Text('Nombre de produits', textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -185,30 +219,16 @@ class HomeScreen extends StatelessWidget {
                                                 height: 28,
                                                 child: Image.asset("assets/eaten.png"),
                                               ),
-                                              const Padding(
-                                                padding: EdgeInsets.only(left: 4, bottom: 3),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 4, bottom: 3),
                                                 child: Text(
-                                                  '2',
+                                                  '${activeStore.itemsInStore}',
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontFamily: AppTheme.fontName,
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 16,
                                                     color: AppTheme.darkerText,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 4, bottom: 3),
-                                                child: Text(
-                                                  'Kcal',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontFamily: AppTheme.fontName,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 12,
-                                                    letterSpacing: -0.2,
-                                                    color: AppTheme.grey.withOpacity(0.5),
                                                   ),
                                                 ),
                                               ),
@@ -240,7 +260,7 @@ class HomeScreen extends StatelessWidget {
                                         children: <Widget>[
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4, bottom: 2),
-                                            child: Text('Burned', textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.w900)),
+                                            child: Text('Places disponibles', textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -251,30 +271,16 @@ class HomeScreen extends StatelessWidget {
                                                 height: 28,
                                                 child: Image.asset("assets/burned.png"),
                                               ),
-                                              const Padding(
-                                                padding: EdgeInsets.only(left: 4, bottom: 3),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left: 4, bottom: 3),
                                                 child: Text(
-                                                  '3',
+                                                  '${activeStore.maxItemPerStore}',
                                                   textAlign: TextAlign.center,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontFamily: AppTheme.fontName,
                                                     fontWeight: FontWeight.w600,
                                                     fontSize: 16,
                                                     color: AppTheme.darkerText,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 8, bottom: 3),
-                                                child: Text(
-                                                  'Kcal',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontFamily: AppTheme.fontName,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 12,
-                                                    letterSpacing: -0.2,
-                                                    color: AppTheme.grey.withOpacity(0.5),
                                                   ),
                                                 ),
                                               ),
@@ -305,30 +311,30 @@ class HomeScreen extends StatelessWidget {
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(100.0),
                                       ),
-                                      border: Border.all(width: 4, color: AppTheme.nearlyDarkBlue.withOpacity(0.2)),
+                                      border: Border.all(width: 4, color: remainingPlacesColor.withOpacity(0.2)),
                                     ),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        const Text(
-                                          '44',
+                                        Text(
+                                          '$remainingPlaces',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily: AppTheme.fontName,
                                             fontWeight: FontWeight.normal,
                                             fontSize: 24,
                                             letterSpacing: 0.0,
-                                            color: AppTheme.nearlyDarkBlue,
+                                            color: remainingPlacesColor,
                                           ),
                                         ),
                                         Text(
-                                          'Kcal left',
+                                          'places \n restantes',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily: AppTheme.fontName,
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 12,
+                                            fontSize: 9,
                                             letterSpacing: 0.0,
                                             color: AppTheme.grey.withOpacity(0.5),
                                           ),
@@ -340,7 +346,7 @@ class HomeScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: CustomPaint(
-                                    painter: CurvePainter(colors: [AppTheme.nearlyDarkBlue, HexColor("#8A98E8"), HexColor("#8A98E8")], angle: 140 + (360 - 140) * (1.0 - 0)),
+                                    painter: CurvePainter(colors: [remainingPlacesColor, HexColor("#8A98E8"), HexColor("#8A98E8")], angle: (remainingPlaces / 100) * 60),
                                     child: const SizedBox(
                                       width: 108,
                                       height: 108,
