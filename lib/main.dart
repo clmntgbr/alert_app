@@ -5,6 +5,7 @@ import 'package:alert_app/util/curve_painter.dart';
 import 'package:alert_app/util/hex_color.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -174,7 +175,11 @@ class HomeScreenState extends State<HomeScreen> {
           child: Container(
               decoration: BoxDecoration(
                 color: AppTheme.white,
-                borderRadius: const BorderRadius.only(topLeft: Radius.circular(8.0), bottomLeft: Radius.circular(8.0), bottomRight: Radius.circular(8.0), topRight: Radius.circular(68.0)),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    bottomLeft: Radius.circular(8.0),
+                    bottomRight: Radius.circular(8.0),
+                    topRight: Radius.circular(68.0)),
                 boxShadow: <BoxShadow>[
                   BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                 ],
@@ -208,7 +213,8 @@ class HomeScreenState extends State<HomeScreen> {
                                         children: <Widget>[
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4, bottom: 2),
-                                            child: Text('Nombre de produits', textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
+                                            child: Text('Nombre de produits',
+                                                textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -221,9 +227,11 @@ class HomeScreenState extends State<HomeScreen> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(left: 4, bottom: 3),
-                                                child: Text(
-                                                  '${activeStore.itemsInStore}',
-                                                  textAlign: TextAlign.center,
+                                                child: Countup(
+                                                  begin: 0,
+                                                  end: activeStore.itemsInStore.toDouble(),
+                                                  duration: const Duration(seconds: 3),
+                                                  separator: ',',
                                                   style: const TextStyle(
                                                     fontFamily: AppTheme.fontName,
                                                     fontWeight: FontWeight.w600,
@@ -260,7 +268,8 @@ class HomeScreenState extends State<HomeScreen> {
                                         children: <Widget>[
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4, bottom: 2),
-                                            child: Text('Places disponibles', textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
+                                            child: Text('Places disponibles',
+                                                textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
                                           ),
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
@@ -273,9 +282,11 @@ class HomeScreenState extends State<HomeScreen> {
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(left: 4, bottom: 3),
-                                                child: Text(
-                                                  '${activeStore.maxItemPerStore}',
-                                                  textAlign: TextAlign.center,
+                                                child: Countup(
+                                                  begin: 0,
+                                                  end: remainingPlaces.toDouble(),
+                                                  duration: const Duration(seconds: 3),
+                                                  separator: ',',
                                                   style: const TextStyle(
                                                     fontFamily: AppTheme.fontName,
                                                     fontWeight: FontWeight.w600,
@@ -317,9 +328,11 @@ class HomeScreenState extends State<HomeScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Text(
-                                          '$remainingPlaces',
-                                          textAlign: TextAlign.center,
+                                        Countup(
+                                          begin: 0,
+                                          end: remainingPlaces.toDouble(),
+                                          duration: const Duration(seconds: 3),
+                                          separator: ',',
                                           style: TextStyle(
                                             fontFamily: AppTheme.fontName,
                                             fontWeight: FontWeight.normal,
@@ -328,17 +341,8 @@ class HomeScreenState extends State<HomeScreen> {
                                             color: remainingPlacesColor,
                                           ),
                                         ),
-                                        Text(
-                                          'places \n restantes',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: AppTheme.fontName,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 9,
-                                            letterSpacing: 0.0,
-                                            color: AppTheme.grey.withOpacity(0.5),
-                                          ),
-                                        ),
+                                        Text('places \n restantes',
+                                            textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.bold, fontSize: 11)),
                                       ],
                                     ),
                                   ),
@@ -346,7 +350,9 @@ class HomeScreenState extends State<HomeScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: CustomPaint(
-                                    painter: CurvePainter(colors: [remainingPlacesColor, HexColor("#8A98E8"), HexColor("#8A98E8")], angle: (remainingPlaces / 100) * 60),
+                                    painter: CurvePainter(
+                                        colors: [remainingPlacesColor, HexColor("#8A98E8"), HexColor("#8A98E8")],
+                                        angle: (remainingPlaces / 100) * 60),
                                     child: const SizedBox(
                                       width: 108,
                                       height: 108,
@@ -379,25 +385,26 @@ class HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text('Carbs', textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.w900, letterSpacing: -0.2, color: AppTheme.darkText)),
+                              Text('Produits expirés',
+                                  textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.w900, color: AppTheme.darkText)),
                               Padding(
                                 padding: const EdgeInsets.only(top: 4),
                                 child: Container(
                                   height: 4,
-                                  width: 70,
+                                  width: 120,
                                   decoration: BoxDecoration(
-                                    color: HexColor('#87A0E5').withOpacity(0.2),
+                                    color: HexColor('#F56E98').withOpacity(0.2),
                                     borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                                   ),
                                   child: Row(
                                     children: <Widget>[
                                       Container(
-                                        width: ((70 / 1.2) * 1),
+                                        width: 120,
                                         height: 4,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(colors: [
-                                            HexColor('#87A0E5'),
-                                            HexColor('#87A0E5').withOpacity(0.5),
+                                            HexColor('#F56E98'),
+                                            HexColor('#F56E98').withOpacity(0.5),
                                           ]),
                                           borderRadius: const BorderRadius.all(Radius.circular(4.0)),
                                         ),
@@ -408,127 +415,12 @@ class HomeScreenState extends State<HomeScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 6),
-                                child: Text(
-                                  '12g left',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: AppTheme.fontName,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    color: AppTheme.grey.withOpacity(0.5),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('Protein', textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.w900, letterSpacing: -0.2, color: AppTheme.darkText)),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Container(
-                                      height: 4,
-                                      width: 70,
-                                      decoration: BoxDecoration(
-                                        color: HexColor('#F56E98').withOpacity(0.2),
-                                        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                      ),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: ((70 / 2) * 1),
-                                            height: 4,
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(colors: [
-                                                HexColor('#F56E98').withOpacity(0.1),
-                                                HexColor('#F56E98'),
-                                              ]),
-                                              borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 6),
-                                    child: Text(
-                                      '30g left',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: AppTheme.fontName,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: AppTheme.grey.withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    'Fat',
-                                    style: AppTheme.appFont(fontWeight: FontWeight.w900, letterSpacing: -0.2, color: AppTheme.darkText),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 0, top: 4),
-                                    child: Container(
-                                      height: 4,
-                                      width: 70,
-                                      decoration: BoxDecoration(
-                                        color: HexColor('#F1B440').withOpacity(0.2),
-                                        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                      ),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: ((70 / 2.5) * 1),
-                                            height: 4,
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(colors: [
-                                                HexColor('#F1B440').withOpacity(0.1),
-                                                HexColor('#F1B440'),
-                                              ]),
-                                              borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 6),
-                                    child: Text(
-                                      '10g left',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: AppTheme.fontName,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: AppTheme.grey.withOpacity(0.5),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                child: Countup(
+                                    begin: 0,
+                                    end: activeStore.itemsExpiredInStore.toDouble(),
+                                    duration: const Duration(seconds: 3),
+                                    separator: ',',
+                                    style: AppTheme.appFont(fontWeight: FontWeight.w600, fontSize: 16, color: AppTheme.darkerText)),
                               ),
                             ],
                           ),
