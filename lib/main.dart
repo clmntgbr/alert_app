@@ -164,272 +164,369 @@ class HomeScreenState extends State<HomeScreen> {
     return Colors.green;
   }
 
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     int remainingPlaces = activeStore.maxItemPerStore - activeStore.itemsInStore;
     var remainingPlacesColor = getStoreColor(activeStore.itemsInStore);
 
-    return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsets.only(top: 55, left: 16, right: 16),
-          child: Container(
-              decoration: BoxDecoration(
-                color: AppTheme.white,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    bottomLeft: Radius.circular(8.0),
-                    bottomRight: Radius.circular(8.0),
-                    topRight: Radius.circular(68.0)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
-                ],
-              ),
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: MediaQuery.of(context).padding.top,
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 48,
-                                      width: 2,
-                                      decoration: BoxDecoration(
-                                        color: HexColor('#87A0E5').withOpacity(0.5),
-                                        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 4, bottom: 2),
-                                            child: Text('Nombre de produits',
-                                                textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: <Widget>[
-                                              SizedBox(
-                                                width: 28,
-                                                height: 28,
-                                                child: Image.asset("assets/eaten.png"),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 4, bottom: 3),
-                                                child: Countup(
-                                                  begin: 0,
-                                                  end: activeStore.itemsInStore.toDouble(),
-                                                  duration: const Duration(seconds: 3),
-                                                  separator: ',',
-                                                  style: const TextStyle(
-                                                    fontFamily: AppTheme.fontName,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: AppTheme.darkerText,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 48,
-                                      width: 2,
-                                      decoration: BoxDecoration(
-                                        color: HexColor('#F56E98').withOpacity(0.5),
-                                        borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 4, bottom: 2),
-                                            child: Text('Places disponibles',
-                                                textAlign: TextAlign.center, style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: <Widget>[
-                                              SizedBox(
-                                                width: 28,
-                                                height: 28,
-                                                child: Image.asset("assets/burned.png"),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 4, bottom: 3),
-                                                child: Countup(
-                                                  begin: 0,
-                                                  end: remainingPlaces.toDouble(),
-                                                  duration: const Duration(seconds: 3),
-                                                  separator: ',',
-                                                  style: const TextStyle(
-                                                    fontFamily: AppTheme.fontName,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: AppTheme.darkerText,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: Center(
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.white,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(100.0),
-                                      ),
-                                      border: Border.all(width: 4, color: remainingPlacesColor.withOpacity(0.2)),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Countup(
-                                          begin: 0,
-                                          end: remainingPlaces.toDouble(),
-                                          duration: const Duration(seconds: 3),
-                                          separator: ',',
-                                          style: TextStyle(
-                                            fontFamily: AppTheme.fontName,
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 24,
-                                            letterSpacing: 0.0,
-                                            color: remainingPlacesColor,
-                                          ),
-                                        ),
-                                        Text('places \n restantes',
-                                            textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.bold, fontSize: 11)),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: CustomPaint(
-                                    painter: CurvePainter(
-                                        colors: [remainingPlacesColor, HexColor("#8A98E8"), HexColor("#8A98E8")],
-                                        angle: (remainingPlaces / 100) * 60),
-                                    child: const SizedBox(
-                                      width: 108,
-                                      height: 108,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 8),
-                    child: Container(
-                      height: 2,
-                      decoration: const BoxDecoration(
-                        color: AppTheme.background,
-                        borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Produits expirés',
-                                  textAlign: TextAlign.center, style: AppTheme.appFont(fontWeight: FontWeight.w900, color: AppTheme.darkText)),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 4),
-                                child: Container(
-                                  height: 4,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    color: HexColor('#F56E98').withOpacity(0.2),
-                                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                  ),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        width: 120,
-                                        height: 4,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(colors: [
-                                            HexColor('#F56E98'),
-                                            HexColor('#F56E98').withOpacity(0.5),
-                                          ]),
-                                          borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 6),
-                                child: Countup(
-                                    begin: 0,
-                                    end: activeStore.itemsExpiredInStore.toDouble(),
-                                    duration: const Duration(seconds: 3),
-                                    separator: ',',
-                                    style: AppTheme.appFont(fontWeight: FontWeight.w600, fontSize: 16, color: AppTheme.darkerText)),
-                              ),
+                      padding: const EdgeInsets.only(top: 55, left: 16, right: 16),
+                      child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.white,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8.0),
+                                bottomLeft: Radius.circular(8.0),
+                                bottomRight: Radius.circular(8.0),
+                                topRight: Radius.circular(68.0)),
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                             ],
                           ),
-                        )
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 48,
+                                                  width: 2,
+                                                  decoration: BoxDecoration(
+                                                    color: HexColor('#87A0E5').withOpacity(0.5),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 4, bottom: 2),
+                                                        child: Text('Nombre de produits',
+                                                            textAlign: TextAlign.center,
+                                                            style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                                        children: <Widget>[
+                                                          SizedBox(
+                                                            width: 28,
+                                                            height: 28,
+                                                            child: Image.asset("assets/eaten.png"),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 4, bottom: 3),
+                                                            child: Countup(
+                                                              begin: 0,
+                                                              end: activeStore.itemsInStore.toDouble(),
+                                                              duration: const Duration(seconds: 3),
+                                                              separator: ',',
+                                                              style: const TextStyle(
+                                                                fontFamily: AppTheme.fontName,
+                                                                fontWeight: FontWeight.w600,
+                                                                fontSize: 16,
+                                                                color: AppTheme.darkerText,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Row(
+                                              children: <Widget>[
+                                                Container(
+                                                  height: 48,
+                                                  width: 2,
+                                                  decoration: BoxDecoration(
+                                                    color: HexColor('#F56E98').withOpacity(0.5),
+                                                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 4, bottom: 2),
+                                                        child: Text('Places disponibles',
+                                                            textAlign: TextAlign.center,
+                                                            style: AppTheme.appFont(fontSize: 12, fontWeight: FontWeight.w900)),
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                                        children: <Widget>[
+                                                          SizedBox(
+                                                            width: 28,
+                                                            height: 28,
+                                                            child: Image.asset("assets/burned.png"),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 4, bottom: 3),
+                                                            child: Countup(
+                                                              begin: 0,
+                                                              end: remainingPlaces.toDouble(),
+                                                              duration: const Duration(seconds: 3),
+                                                              separator: ',',
+                                                              style: const TextStyle(
+                                                                fontFamily: AppTheme.fontName,
+                                                                fontWeight: FontWeight.w600,
+                                                                fontSize: 16,
+                                                                color: AppTheme.darkerText,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: Center(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                width: 100,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  color: AppTheme.white,
+                                                  borderRadius: const BorderRadius.all(
+                                                    Radius.circular(100.0),
+                                                  ),
+                                                  border: Border.all(width: 4, color: remainingPlacesColor.withOpacity(0.2)),
+                                                ),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Countup(
+                                                      begin: 0,
+                                                      end: remainingPlaces.toDouble(),
+                                                      duration: const Duration(seconds: 3),
+                                                      separator: ',',
+                                                      style: TextStyle(
+                                                        fontFamily: AppTheme.fontName,
+                                                        fontWeight: FontWeight.normal,
+                                                        fontSize: 24,
+                                                        letterSpacing: 0.0,
+                                                        color: remainingPlacesColor,
+                                                      ),
+                                                    ),
+                                                    Text('places \n restantes',
+                                                        textAlign: TextAlign.center,
+                                                        style: AppTheme.appFont(fontWeight: FontWeight.bold, fontSize: 11)),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: CustomPaint(
+                                                painter: CurvePainter(
+                                                    colors: [remainingPlacesColor, HexColor("#8A98E8"), HexColor("#8A98E8")],
+                                                    angle: (remainingPlaces / 100) * 60),
+                                                child: const SizedBox(
+                                                  width: 108,
+                                                  height: 108,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 8),
+                                child: Container(
+                                  height: 2,
+                                  decoration: const BoxDecoration(
+                                    color: AppTheme.background,
+                                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text('Produits expirés',
+                                              textAlign: TextAlign.center,
+                                              style: AppTheme.appFont(fontWeight: FontWeight.w900, color: AppTheme.darkText)),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 4),
+                                            child: Container(
+                                              height: 4,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                color: HexColor('#F56E98').withOpacity(0.2),
+                                                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                                              ),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                    width: 120,
+                                                    height: 4,
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(colors: [
+                                                        HexColor('#F56E98'),
+                                                        HexColor('#F56E98').withOpacity(0.5),
+                                                      ]),
+                                                      borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 6),
+                                            child: Countup(
+                                                begin: 0,
+                                                end: activeStore.itemsExpiredInStore.toDouble(),
+                                                duration: const Duration(seconds: 3),
+                                                separator: ',',
+                                                style: AppTheme.appFont(fontWeight: FontWeight.w600, fontSize: 16, color: AppTheme.darkerText)),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ))),
+                  Flexible(
+                    child: GridView.count(
+                      primary: false,
+                      padding: const EdgeInsets.all(20),
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      crossAxisCount: 2,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[100],
+                          child: const Text("He'd have you all unravel at the"),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[200],
+                          child: const Text('Heed not the rabble'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[300],
+                          child: const Text('Sound of screams but the'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[400],
+                          child: const Text('Who scream'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[500],
+                          child: const Text('Revolution is coming...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[600],
+                          child: const Text('Revolution, they...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[500],
+                          child: const Text('Revolution is coming...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[600],
+                          child: const Text('Revolution, they...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[500],
+                          child: const Text('Revolution is coming...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[600],
+                          child: const Text('Revolution, they...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[500],
+                          child: const Text('Revolution is coming...'),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          color: Colors.teal[600],
+                          child: const Text('Revolution, they...'),
+                        ),
                       ],
                     ),
                   )
                 ],
-              ))),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
