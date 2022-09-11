@@ -1,5 +1,6 @@
 import 'package:alert_app/api_service.dart';
 import 'package:alert_app/app_theme.dart';
+import 'package:alert_app/widget/items_card_widget.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_items.dart';
 import 'package:alert_app/util/curve_painter.dart';
@@ -157,8 +158,32 @@ class HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                     padding: const EdgeInsets.only(top: 0, left: 16, right: 16),
                     child: Column(
-                      children: const [DashboardScreen()],
+                      children: [const DashboardScreen(), getHorizontalItemSlider()],
                     )))));
+  }
+
+  Widget getHorizontalItemSlider() {
+    return FutureBuilder<GetItems>(
+      future: items,
+      builder: (context, snapshot) {
+        List<Widget> children = [];
+        if (snapshot.hasData) {
+          for (Items item in snapshot.data!.items) {
+            children.add(ItemCardWidget(item: item));
+          }
+          return Column(children: children);
+        }
+        return Container(
+            padding: const EdgeInsets.all(50),
+            child: const SizedBox(
+              height: 100.0,
+              width: 100.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
+              ),
+            ));
+      },
+    );
   }
 }
 
