@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-GetItems itemsFromJson(String str) => GetItems.fromJson(json.decode(str));
+GetItems itemsFromJson(String str) => GetItems.fromJson(
+      json.decode(str),
+    );
 
 class GetItems {
   String context;
@@ -27,20 +29,24 @@ class GetItems {
       context: json['@context'],
       contextId: json['@id'],
       contextType: json['@type'],
-      items: json['hydra:member'].map((tagJson) => Items.fromJson(tagJson)).toList(),
+      items: json['hydra:member']
+          .map(
+            (tagJson) => Item.fromJson(tagJson),
+          )
+          .toList(),
       totalItems: json['hydra:totalItems'],
     );
   }
 }
 
-class Items {
+class Item {
   String contextId;
   String contextType;
   int id;
   String? expirationDate;
   Product product;
 
-  Items({
+  Item({
     required this.contextId,
     required this.contextType,
     required this.id,
@@ -48,13 +54,14 @@ class Items {
     required this.product,
   });
 
-  factory Items.fromJson(dynamic json) {
-    return Items(
-        contextId: json['@id'],
-        contextType: json['@type'],
-        id: json['id'],
-        expirationDate: json['expirationDate'],
-        product: Product.fromJson(json['product']));
+  factory Item.fromJson(dynamic json) {
+    return Item(
+      contextId: json['@id'],
+      contextType: json['@type'],
+      id: json['id'],
+      expirationDate: json['expirationDate'],
+      product: Product.fromJson(json['product']),
+    );
   }
 
   @override

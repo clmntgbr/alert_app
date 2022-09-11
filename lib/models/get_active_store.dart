@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-GetActiveStore activeStoreFromJson(String str) => GetActiveStore.fromJson(json.decode(str));
+GetActiveStore activeStoreFromJson(String str) => GetActiveStore.fromJson(
+      json.decode(str),
+    );
 
 class GetActiveStore {
   String context;

@@ -25,19 +25,47 @@ class CurvePainter extends CustomPainter {
       ..strokeWidth = 14;
     final shdowPaintCenter = Offset(size.width / 2, size.height / 2);
     final shdowPaintRadius = math.min(size.width / 2, size.height / 2) - (14 / 2);
-    canvas.drawArc(Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius), degreeToRadians(278), degreeToRadians(360 - (365 - angle!)), false, shdowPaint);
+    canvas.drawArc(
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        degreeToRadians(278),
+        degreeToRadians(
+          360 - (365 - angle!),
+        ),
+        false,
+        shdowPaint);
 
     shdowPaint.color = Colors.grey.withOpacity(0.3);
     shdowPaint.strokeWidth = 16;
-    canvas.drawArc(Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius), degreeToRadians(278), degreeToRadians(360 - (365 - angle!)), false, shdowPaint);
+    canvas.drawArc(
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        degreeToRadians(278),
+        degreeToRadians(
+          360 - (365 - angle!),
+        ),
+        false,
+        shdowPaint);
 
     shdowPaint.color = Colors.grey.withOpacity(0.2);
     shdowPaint.strokeWidth = 20;
-    canvas.drawArc(Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius), degreeToRadians(278), degreeToRadians(360 - (365 - angle!)), false, shdowPaint);
+    canvas.drawArc(
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        degreeToRadians(278),
+        degreeToRadians(
+          360 - (365 - angle!),
+        ),
+        false,
+        shdowPaint);
 
     shdowPaint.color = Colors.grey.withOpacity(0.1);
     shdowPaint.strokeWidth = 22;
-    canvas.drawArc(Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius), degreeToRadians(278), degreeToRadians(360 - (365 - angle!)), false, shdowPaint);
+    canvas.drawArc(
+        Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        degreeToRadians(278),
+        degreeToRadians(
+          360 - (365 - angle!),
+        ),
+        false,
+        shdowPaint);
 
     final rect = Rect.fromLTWH(0.0, 0.0, size.width, size.width);
     final gradient = SweepGradient(
@@ -54,7 +82,14 @@ class CurvePainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = math.min(size.width / 2, size.height / 2) - (14 / 2);
 
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), degreeToRadians(278), degreeToRadians(360 - (365 - angle!)), false, paint);
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        degreeToRadians(278),
+        degreeToRadians(
+          360 - (365 - angle!),
+        ),
+        false,
+        paint);
 
     const gradient1 = SweepGradient(
       tileMode: TileMode.repeated,
@@ -71,7 +106,9 @@ class CurvePainter extends CustomPainter {
     canvas.save();
 
     canvas.translate(centerToCircle, centerToCircle);
-    canvas.rotate(degreeToRadians(angle! + 2));
+    canvas.rotate(
+      degreeToRadians(angle! + 2),
+    );
 
     canvas.save();
     canvas.translate(0.0, -centerToCircle + 14 / 2);
