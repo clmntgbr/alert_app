@@ -1,11 +1,10 @@
 import 'package:alert_app/api_service.dart';
 import 'package:alert_app/app_theme.dart';
-import 'package:alert_app/grocery_item.dart';
-import 'package:alert_app/grocery_item_card_widget.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_items.dart';
 import 'package:alert_app/util/curve_painter.dart';
 import 'package:alert_app/util/hex_color.dart';
+import 'package:alert_app/widget/items_card_widget.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:countup/countup.dart';
@@ -46,7 +45,6 @@ class AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: AppTheme.white,
-        // backgroundColor: HexColor('#f2f3f9'),
         body: selectedWidget,
         floatingActionButton: FloatingActionButton(
           onPressed: barCodeScan,
@@ -153,12 +151,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  GetItems? items;
+  late Future<GetItems> items;
 
   @override
   void initState() {
     super.initState();
-    ApiService().getItemsExpirationDateLimited().then((value) => items = value);
+    items = ApiService().getItemsExpirationDateLimited();
   }
 
   @override
@@ -169,64 +167,12 @@ class HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const DashboardScreen(),
-              padded(
-                subTitle("Exclusive Order"),
+              ItemsCardWidget.padded(
+                ItemsCardWidget.subTitle("Exclusive Order"),
               ),
-              getHorizontalItemSlider(demoItems),
-              padded(
-                subTitle("Exclusive Order"),
-              ),
-              getHorizontalItemSlider(demoItems),
+              ItemsCardWidget.getHorizontalItemSlider(items),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget padded(Widget widget) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      child: widget,
-    );
-  }
-
-  Widget subTitle(String text) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        const Spacer(),
-        const Text(
-          "See All",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent),
-        ),
-      ],
-    );
-  }
-
-  Widget getHorizontalItemSlider(List<GroceryItem> items) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15),
-      child: SizedBox(
-        height: 250,
-        child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          itemCount: items.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {},
-              child: GroceryItemCardWidget(item: items[index]),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(
-              width: 20,
-            );
-          },
         ),
       ),
     );
