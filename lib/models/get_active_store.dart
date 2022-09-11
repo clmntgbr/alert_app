@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-ActiveStore activeStoreFromJson(String str) => ActiveStore.fromJson(json.decode(str));
+GetActiveStore activeStoreFromJson(String str) => GetActiveStore.fromJson(json.decode(str));
 
-class ActiveStore {
+class GetActiveStore {
   String context;
   String contextId;
   String contextType;
@@ -18,7 +18,7 @@ class ActiveStore {
     return '{context: $context, contextId: $contextId, contextType: $contextType, id: $id, name: $name, isActive: $isActive, itemsInStore: $itemsInStore, itemsExpiredInStore: $itemsExpiredInStore}';
   }
 
-  ActiveStore({
+  GetActiveStore({
     required this.context,
     required this.contextId,
     required this.contextType,
@@ -30,8 +30,8 @@ class ActiveStore {
     required this.maxItemPerStore,
   });
 
-  factory ActiveStore.fromJson(Map<String, dynamic> json) {
-    return ActiveStore(
+  factory GetActiveStore.fromJson(Map<String, dynamic> json) {
+    return GetActiveStore(
       context: json['@context'],
       contextId: json['@id'],
       contextType: json['@type'],
@@ -45,6 +45,7 @@ class ActiveStore {
   }
 }
 
-ActiveStore activeStoreInit() {
-  return ActiveStore(context: '', contextId: '', contextType: '', id: 0, name: '', isActive: false, itemsInStore: 0, itemsExpiredInStore: 0, maxItemPerStore: 0);
+GetActiveStore activeStoreInit() {
+  return GetActiveStore(
+      context: '', contextId: '', contextType: '', id: 0, name: '', isActive: false, itemsInStore: 0, itemsExpiredInStore: 0, maxItemPerStore: 0);
 }
