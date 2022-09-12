@@ -151,12 +151,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  late Future<GetItems> items;
+  late Future<GetItems> itemsExpireSoonLimited;
+  late Future<GetItems> itemsExpiredLimited;
 
   @override
   void initState() {
     super.initState();
-    items = ApiService().getItemsExpirationDateLimited();
+    itemsExpireSoonLimited = ApiService().getItemsExpireSoonLimited();
+    itemsExpiredLimited = ApiService().getItemsExpiredLimited();
   }
 
   @override
@@ -170,7 +172,11 @@ class HomeScreenState extends State<HomeScreen> {
               ItemsCardWidget.padded(
                 ItemsCardWidget.subTitle("Exclusive Order"),
               ),
-              ItemsCardWidget.getHorizontalItemSlider(items),
+              ItemsCardWidget.getHorizontalItemSlider(itemsExpireSoonLimited),
+              ItemsCardWidget.padded(
+                ItemsCardWidget.subTitle("Exclusive Order"),
+              ),
+              ItemsCardWidget.getHorizontalItemSlider(itemsExpiredLimited),
             ],
           ),
         ),

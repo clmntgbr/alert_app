@@ -26,10 +26,26 @@ class ApiService {
     throw Exception('Failed to load Items');
   }
 
-  Future<GetItems> getItemsExpirationDateLimited() async {
-    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpirationDateLimitedEndpoint}');
+  Future<GetItems> getItemsExpireSoonLimited() async {
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}');
 
-    Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsExpirationDateLimitedEndpoint}'),
+    Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}'),
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token});
+
+    if (response.statusCode == 200) {
+      GetItems model = itemsFromJson(
+        response.body.toString(),
+      );
+      return model;
+    }
+
+    throw Exception('Failed to load Items');
+  }
+
+  Future<GetItems> getItemsExpiredLimited() async {
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpiredLimitedEndpoint}');
+
+    Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsExpiredLimitedEndpoint}'),
         headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token});
 
     if (response.statusCode == 200) {
