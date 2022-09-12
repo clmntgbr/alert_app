@@ -9,11 +9,6 @@ class ItemsCardWidget extends StatelessWidget {
   const ItemsCardWidget({Key? key, required this.item}) : super(key: key);
   final Item item;
 
-  final double width = 180;
-  final double height = 250;
-  final Color borderColor = const Color(0xffE2E2E2);
-  final double borderRadius = 18;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,15 +17,15 @@ class ItemsCardWidget extends StatelessWidget {
         padding: const EdgeInsets.all(0),
         onPressed: () {},
         child: Container(
-          width: width,
-          height: height,
+          width: 180,
+          height: 250,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(
-              color: borderColor,
+              color: const Color(0xffE2E2E2),
             ),
             borderRadius: BorderRadius.circular(
-              borderRadius,
+              18,
             ),
           ),
           child: Padding(

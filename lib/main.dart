@@ -127,16 +127,30 @@ class AppState extends State<App> {
     setState(
       () {
         selectedIndex = index;
+
         if (index == 0) {
           selectedWidget = const HomeScreen();
-        } else if (index == 1) {
+          return;
+        }
+
+         if (index == 1) {
           selectedWidget = const NotificationScreen();
-        } else if (index == 2) {
+          return;
+        }
+
+         if (index == 2) {
           selectedWidget = const LocationScreen();
-        } else if (index == 3) {
+          return;
+        }
+
+         if (index == 3) {
           selectedWidget = const MessagesScreen();
-        } else if (index == 4) {
+          return;
+        }
+
+         if (index == 4) {
           selectedWidget = const ProfileScreen();
+          return;
         }
       },
     );
