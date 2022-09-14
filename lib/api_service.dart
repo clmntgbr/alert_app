@@ -4,12 +4,15 @@ import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_items.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 
-class ApiService {
-  static const String token =
-      'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjI5OTkzMDYsImV4cCI6MTY2OTA0NzMwNiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImNsZW1lbnRAZ21haWwuY29tIn0.Q1aJ_zr8f1NSzB4cIel594OYfNeOP0rWSMhRqUXlmA7PvIyL0beGNUy0J1zAtxplq_B9r2bBIRu4dQateEQ6tbe6-p3keBQAPpPemdEDewo_K_Gg3BiBy2_T0i8-s4x8Qfa7wTm0mZcAZGJUnbg_tWdl6s4yPBn2kQj047g3wa_7jY2li1itrihYEns45taVhzQ3oP-0mgBcjijBeiofZ3eR8-HV1KphhmawM_tKgHDpmclhkbUnxs43kxGY8xM_Jc_9rg-6lCVje5Xw-KKJaic_KxLgNJfjCOGgyUfxf9mEUMCLoWw_IBKo_KS3y3LjDPkpQ7J30__0O_VO3b2p5g';
+const String token =
+    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NjIxNDM4NTYsImV4cCI6MTY2ODE5MTg1Niwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImNsZW1lbnRAZ21haWwuY29tIn0.jpNZPek_BrbTFJvIzi1xFJgtPA9Ntu9F6VzUK24BPEQOrrdHVI_cqg-yiI_2F51abB06TZ9uMllixKnvGEdRBNkezsRwDfJRuVri1w_T9LzqZg2TxGGxhbUon5pUO3rseIdYTew3iKzll52YiLuq_VsiCi2xsVvA9S1AunQD1vSuO7Nd6PdnufU5uJwbAAFv5qwEX3OAT8EsXVvFESJOILXzXhIWSQ5KsYe_dWneNWyZdDt4ZCFATrRV8JrDE7na0mn5RzfER7Lj03DOaPTWDDbCc4N1qT4kdcaDhmFRB5hIAkpLUMDbJDNFdSqP80tzf8yKjc2xCd6qJ4PKPSXsdQ';
 
+const storage = FlutterSecureStorage();
+
+class ApiService {
   Future<GetActiveStore> getActiveStore() async {
     debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.activeStoreEndpoint}');
 
@@ -26,11 +29,19 @@ class ApiService {
     throw Exception('Failed to load Items');
   }
 
-  Future<GetItems> getItemsExpireSoonLimited() async {
+  Future<GetItems> getItemsExpireSoonLimited(BuildContext context) async {
+    await storage.write(key: 'tokenApi', value: token);
+
+    final tokenApi = await storage.read(key: 'tokenApi');
+
     debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}');
 
+    if (tokenApi == null) {
+      throw Exception('Failed to load Items');
+    }
+
     Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}'),
-        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token});
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
 
     if (response.statusCode == 200) {
       GetItems model = itemsFromJson(

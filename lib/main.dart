@@ -8,6 +8,7 @@ import 'package:alert_app/widget/items_card_widget.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:countup/countup.dart';
+import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -42,10 +43,19 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: AppTheme.white,
-        body: selectedWidget,
+      title: "Draggable Home",
+      home: DraggableHome(
+        leading: const Icon(Icons.arrow_back_ios),
+        title: const Text("Draggable Home"),
+        curvedBodyRadius: 0,
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+        ],
+        headerWidget: headerWidget(context),
+        headerBottomBar: headerBottomBarWidget(),
+        body: [
+          selectedWidget,
+        ],
         floatingActionButton: FloatingActionButton(
           onPressed: barCodeScan,
           backgroundColor: Colors.redAccent,
@@ -119,6 +129,54 @@ class AppState extends State<App> {
             )
           ],
         ),
+        fullyStretchable: false,
+        backgroundColor: Colors.white,
+        appBarColor: Colors.redAccent,
+      ),
+    );
+  }
+
+  Row headerBottomBarWidget() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [
+        Icon(
+          Icons.settings,
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
+
+  Widget headerWidget(BuildContext context) {
+    return Container(
+      color: Colors.redAccent,
+      child: Center(
+        child: Text(
+          "Title",
+          style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.white70),
+        ),
+      ),
+    );
+  }
+
+  ListView listView() {
+    return ListView.builder(
+      padding: const EdgeInsets.only(top: 0),
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 20,
+      shrinkWrap: true,
+      itemBuilder: (context, index) => Card(
+        color: Colors.white70,
+        child: ListTile(
+          leading: CircleAvatar(
+            child: Text("$index"),
+          ),
+          title: const Text("Title"),
+          subtitle: const Text("Subtitile"),
+        ),
       ),
     );
   }
@@ -133,22 +191,22 @@ class AppState extends State<App> {
           return;
         }
 
-         if (index == 1) {
+        if (index == 1) {
           selectedWidget = const NotificationScreen();
           return;
         }
 
-         if (index == 2) {
+        if (index == 2) {
           selectedWidget = const LocationScreen();
           return;
         }
 
-         if (index == 3) {
+        if (index == 3) {
           selectedWidget = const MessagesScreen();
           return;
         }
 
-         if (index == 4) {
+        if (index == 4) {
           selectedWidget = const ProfileScreen();
           return;
         }
@@ -171,7 +229,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    itemsExpireSoonLimited = ApiService().getItemsExpireSoonLimited();
+    itemsExpireSoonLimited = ApiService().getItemsExpireSoonLimited(context);
     itemsExpiredLimited = ApiService().getItemsExpiredLimited();
   }
 

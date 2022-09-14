@@ -19,6 +19,8 @@ dependencies:
   barcode_scan2: ^4.2.1
   intl: ^0.17.0
   countup: ^0.1.4
+  draggable_home: ^1.0.3
+  flutter_secure_storage: ^6.0.0
 
 dev_dependencies:
   flutter_test:
