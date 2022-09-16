@@ -72,7 +72,6 @@ class ApiService {
       GetUser model = userFromJson(
         response.body.toString(),
       );
-      debugPrint(model.toString());
       return model;
     }
 

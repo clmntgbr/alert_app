@@ -38,6 +38,7 @@ class User {
   int id;
   String email;
   String name;
+  String imagePath;
 
   User({
     required this.contextId,
@@ -45,6 +46,7 @@ class User {
     required this.id,
     required this.email,
     required this.name,
+    required this.imagePath,
   });
 
   factory User.fromJson(dynamic json) {
@@ -54,11 +56,20 @@ class User {
       id: json['id'],
       email: json['email'],
       name: json['name'],
+      imagePath: json['imagePath'],
     );
   }
 
   @override
   String toString() {
-    return '{@contextId: $contextId, contextType: $contextType, id: $id, email: $email, name: $name}';
+    return '{@contextId: $contextId, contextType: $contextType, id: $id, email: $email, name: $name, imagePath: $imagePath}';
   }
+}
+
+GetUser getUserInit() {
+  return GetUser(context: '', contextId: '', contextType: '', user: userInit());
+}
+
+User userInit() {
+  return User(contextId: '', contextType: '', email: '', id: 0, name: '', imagePath: 'assets/kdi02939Idjdk102.png');
 }

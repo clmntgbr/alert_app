@@ -1,6 +1,8 @@
 import 'package:alert_app/api_service.dart';
 import 'package:alert_app/category_list_view.dart';
+import 'package:alert_app/constants.dart';
 import 'package:alert_app/course_info_screen.dart';
+import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_user.dart';
 import 'package:flutter/material.dart';
 
@@ -14,13 +16,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  CategoryType categoryType = CategoryType.ui;
-  late Future<GetUser> user;
+  late GetUser user = getUserInit();
+  late GetActiveStore activeStore = activeStoreInit();
 
   @override
   void initState() {
     super.initState();
-    user = ApiService().getUser(context);
+    ApiService().getUser(context).then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+
+    ApiService().getActiveStore().then((value) {
+      setState(() {
+        activeStore = value;
+      });
+    });
   }
 
   @override
@@ -37,7 +49,7 @@ class HomeScreenState extends State<HomeScreen> {
             getAppBarUI(),
             Expanded(
               child: SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: <Widget>[
@@ -72,26 +84,7 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 16,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16),
-          child: Row(
-            children: <Widget>[
-              getButtonUI(CategoryType.ui, categoryType == CategoryType.ui),
-              const SizedBox(
-                width: 16,
-              ),
-              getButtonUI(CategoryType.coding, categoryType == CategoryType.coding),
-              const SizedBox(
-                width: 16,
-              ),
-              getButtonUI(CategoryType.basic, categoryType == CategoryType.basic),
-            ],
-          ),
-        ),
-        CategoryListView(
+        ListItemsView(
           callBack: () {
             moveTo();
           },
@@ -109,52 +102,6 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget getButtonUI(CategoryType categoryTypeData, bool isSelected) {
-    String txt = '';
-    if (CategoryType.ui == categoryTypeData) {
-      txt = 'Ui/Ux';
-    } else if (CategoryType.coding == categoryTypeData) {
-      txt = 'Coding';
-    } else if (CategoryType.basic == categoryTypeData) {
-      txt = 'Basic UI';
-    }
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-            color: isSelected ? DesignCourseAppTheme.nearlyBlue : DesignCourseAppTheme.nearlyWhite,
-            borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-            border: Border.all(color: DesignCourseAppTheme.nearlyBlue)),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: Colors.white24,
-            borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-            onTap: () {
-              setState(() {
-                categoryType = categoryTypeData;
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(top: 12, bottom: 12, left: 18, right: 18),
-              child: Center(
-                child: Text(
-                  txt,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                    letterSpacing: 0.27,
-                    color: isSelected ? DesignCourseAppTheme.nearlyWhite : DesignCourseAppTheme.nearlyBlue,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget getAppBarUI() {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 18, right: 18),
@@ -164,8 +111,8 @@ class HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Text(
+              children: <Widget>[
+                const Text(
                   'Welcome',
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -176,9 +123,9 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Text(
-                  'Clément Goubier',
+                  user.user.name,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                     letterSpacing: 0.27,
@@ -188,19 +135,24 @@ class HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 60,
             height: 60,
-            child: Image.asset('assets/userImage.png'),
+            child: getImageProfile(),
           )
         ],
       ),
     );
   }
-}
 
-enum CategoryType {
-  ui,
-  coding,
-  basic,
+  Widget getImageProfile() {
+    if (user.user.id == 0) {
+      return Image.asset(user.user.imagePath);
+    }
+
+    return Image.network(
+      ApiConstants.baseUrl + user.user.imagePath,
+      fit: BoxFit.cover,
+    );
+  }
 }

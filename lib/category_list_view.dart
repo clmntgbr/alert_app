@@ -1,17 +1,16 @@
-import 'package:alert_app/design_course_app_theme.dart';
 import 'package:alert_app/models/category.dart';
-import 'package:alert_app/util/hex_color.dart';
+import 'package:alert_app/view/list_item_view.dart';
 import 'package:flutter/material.dart';
 
-class CategoryListView extends StatefulWidget {
-  const CategoryListView({Key? key, this.callBack}) : super(key: key);
+class ListItemsView extends StatefulWidget {
+  const ListItemsView({Key? key, this.callBack}) : super(key: key);
 
   final Function()? callBack;
   @override
-  CategoryListViewState createState() => CategoryListViewState();
+  ListItemsViewState createState() => ListItemsViewState();
 }
 
-class CategoryListViewState extends State<CategoryListView> with TickerProviderStateMixin {
+class ListItemsViewState extends State<ListItemsView> with TickerProviderStateMixin {
   AnimationController? animationController;
 
   @override
@@ -54,7 +53,7 @@ class CategoryListViewState extends State<CategoryListView> with TickerProviderS
                       .animate(CurvedAnimation(parent: animationController!, curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn)));
                   animationController?.forward();
 
-                  return CategoryView(
+                  return ListItemView(
                     category: Category.categoryList[index],
                     animation: animation,
                     animationController: animationController,
@@ -66,166 +65,6 @@ class CategoryListViewState extends State<CategoryListView> with TickerProviderS
           },
         ),
       ),
-    );
-  }
-}
-
-class CategoryView extends StatelessWidget {
-  const CategoryView({Key? key, this.category, this.animationController, this.animation, this.callback}) : super(key: key);
-
-  final VoidCallback? callback;
-  final Category? category;
-  final AnimationController? animationController;
-  final Animation<double>? animation;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: animationController!,
-      builder: (BuildContext context, Widget? child) {
-        return FadeTransition(
-          opacity: animation!,
-          child: Transform(
-            transform: Matrix4.translationValues(100 * (1.0 - animation!.value), 0.0, 0.0),
-            child: InkWell(
-              splashColor: Colors.transparent,
-              onTap: callback,
-              child: SizedBox(
-                width: 280,
-                child: Stack(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        const SizedBox(
-                          width: 48,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: HexColor('#F8FAFB'),
-                              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                            ),
-                            child: Row(
-                              children: <Widget>[
-                                const SizedBox(
-                                  width: 48 + 24.0,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 16),
-                                        child: Text(
-                                          category!.title,
-                                          textAlign: TextAlign.left,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16,
-                                            letterSpacing: 0.27,
-                                            color: DesignCourseAppTheme.darkerText,
-                                          ),
-                                        ),
-                                      ),
-                                      const Expanded(
-                                        child: SizedBox(),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 16, bottom: 8),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Text(
-                                              '${category!.lessonCount} lesson',
-                                              textAlign: TextAlign.left,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 12,
-                                                letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme.grey,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                Text(
-                                                  '${category!.rating}',
-                                                  textAlign: TextAlign.left,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 18,
-                                                    letterSpacing: 0.27,
-                                                    color: DesignCourseAppTheme.grey,
-                                                  ),
-                                                ),
-                                                const Icon(
-                                                  Icons.star,
-                                                  color: DesignCourseAppTheme.nearlyBlue,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 16, right: 16),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              '\$${category!.money}',
-                                              textAlign: TextAlign.left,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 18,
-                                                letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme.nearlyBlue,
-                                              ),
-                                            ),
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                color: DesignCourseAppTheme.nearlyBlue,
-                                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                              ),
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(4.0),
-                                                child: Icon(
-                                                  Icons.add,
-                                                  color: DesignCourseAppTheme.nearlyWhite,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24, bottom: 24, left: 16),
-                      child: Row(
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                            child: AspectRatio(aspectRatio: 1.0, child: Image.asset(category!.imagePath)),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
