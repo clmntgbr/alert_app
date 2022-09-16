@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_items.dart';
+import 'package:alert_app/models/get_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
@@ -47,6 +48,31 @@ class ApiService {
       GetItems model = itemsFromJson(
         response.body.toString(),
       );
+      return model;
+    }
+
+    throw Exception('Failed to load Items');
+  }
+
+  Future<GetUser> getUser(BuildContext context) async {
+    await storage.write(key: 'tokenApi', value: token);
+
+    final tokenApi = await storage.read(key: 'tokenApi');
+
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}');
+
+    if (tokenApi == null) {
+      throw Exception('Failed to load Items');
+    }
+
+    Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}'),
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
+
+    if (response.statusCode == 200) {
+      GetUser model = userFromJson(
+        response.body.toString(),
+      );
+      debugPrint(model.toString());
       return model;
     }
 
