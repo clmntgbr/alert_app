@@ -1,12 +1,12 @@
 import 'package:alert_app/api_service.dart';
-import 'package:alert_app/category_list_view.dart';
 import 'package:alert_app/constants.dart';
-import 'package:alert_app/course_info_screen.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_user.dart';
+import 'package:alert_app/view/item_view.dart';
+import 'package:alert_app/view/list_items_view.dart';
 import 'package:flutter/material.dart';
 
-import 'design_course_app_theme.dart';
+import 'app_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,7 +38,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: DesignCourseAppTheme.nearlyWhite,
+      color: AppTheme.nearlyWhite,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
@@ -80,7 +80,7 @@ class HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.w600,
               fontSize: 22,
               letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
+              color: AppTheme.darkerText,
             ),
           ),
         ),
@@ -97,7 +97,7 @@ class HomeScreenState extends State<HomeScreen> {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => CourseInfoScreen(),
+        builder: (BuildContext context) => const ItemView(),
       ),
     );
   }
@@ -119,7 +119,7 @@ class HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
                     letterSpacing: 0.2,
-                    color: DesignCourseAppTheme.grey,
+                    color: AppTheme.grey,
                   ),
                 ),
                 Text(
@@ -129,7 +129,7 @@ class HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                     letterSpacing: 0.27,
-                    color: DesignCourseAppTheme.darkerText,
+                    color: AppTheme.darkerText,
                   ),
                 ),
               ],

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'design_course_app_theme.dart';
+import '../app_theme.dart';
 
-class CourseInfoScreen extends StatefulWidget {
-  const CourseInfoScreen({super.key});
+class ItemView extends StatefulWidget {
+  const ItemView({super.key});
 
   @override
-  CourseInfoScreenState createState() => CourseInfoScreenState();
+  ItemViewState createState() => ItemViewState();
 }
 
-class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderStateMixin {
+class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
@@ -45,7 +45,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
   Widget build(BuildContext context) {
     final double tempHeight = MediaQuery.of(context).size.height - (MediaQuery.of(context).size.width / 1.2) + 24.0;
     return Container(
-      color: DesignCourseAppTheme.nearlyWhite,
+      color: AppTheme.nearlyWhite,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -65,10 +65,10 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: DesignCourseAppTheme.nearlyWhite,
+                  color: AppTheme.nearlyWhite,
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(32.0), topRight: Radius.circular(32.0)),
                   boxShadow: <BoxShadow>[
-                    BoxShadow(color: DesignCourseAppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
+                    BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                   ],
                 ),
                 child: Padding(
@@ -89,7 +89,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22,
                                 letterSpacing: 0.27,
-                                color: DesignCourseAppTheme.darkerText,
+                                color: AppTheme.darkerText,
                               ),
                             ),
                           ),
@@ -106,7 +106,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                     fontWeight: FontWeight.w200,
                                     fontSize: 22,
                                     letterSpacing: 0.27,
-                                    color: DesignCourseAppTheme.nearlyBlue,
+                                    color: AppTheme.nearlyBlue,
                                   ),
                                 ),
                                 Row(
@@ -118,12 +118,12 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                         fontWeight: FontWeight.w200,
                                         fontSize: 22,
                                         letterSpacing: 0.27,
-                                        color: DesignCourseAppTheme.grey,
+                                        color: AppTheme.grey,
                                       ),
                                     ),
                                     Icon(
                                       Icons.star,
-                                      color: DesignCourseAppTheme.nearlyBlue,
+                                      color: AppTheme.nearlyBlue,
                                       size: 24,
                                     ),
                                   ],
@@ -158,7 +158,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                     fontWeight: FontWeight.w200,
                                     fontSize: 14,
                                     letterSpacing: 0.27,
-                                    color: DesignCourseAppTheme.grey,
+                                    color: AppTheme.grey,
                                   ),
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
@@ -180,15 +180,15 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                     height: 48,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: DesignCourseAppTheme.nearlyWhite,
+                                        color: AppTheme.nearlyWhite,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(16.0),
                                         ),
-                                        border: Border.all(color: DesignCourseAppTheme.grey.withOpacity(0.2)),
+                                        border: Border.all(color: AppTheme.grey.withOpacity(0.2)),
                                       ),
                                       child: const Icon(
                                         Icons.add,
-                                        color: DesignCourseAppTheme.nearlyBlue,
+                                        color: AppTheme.nearlyBlue,
                                         size: 28,
                                       ),
                                     ),
@@ -200,15 +200,12 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                     child: Container(
                                       height: 48,
                                       decoration: BoxDecoration(
-                                        color: DesignCourseAppTheme.nearlyBlue,
+                                        color: AppTheme.nearlyBlue,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(16.0),
                                         ),
                                         boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                              color: DesignCourseAppTheme.nearlyBlue.withOpacity(0.5),
-                                              offset: const Offset(1.1, 1.1),
-                                              blurRadius: 10.0),
+                                          BoxShadow(color: AppTheme.nearlyBlue.withOpacity(0.5), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                                         ],
                                       ),
                                       child: const Center(
@@ -219,7 +216,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                                             fontWeight: FontWeight.w600,
                                             fontSize: 18,
                                             letterSpacing: 0.0,
-                                            color: DesignCourseAppTheme.nearlyWhite,
+                                            color: AppTheme.nearlyWhite,
                                           ),
                                         ),
                                       ),
@@ -246,7 +243,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                 alignment: Alignment.center,
                 scale: CurvedAnimation(parent: animationController!, curve: Curves.fastOutSlowIn),
                 child: Card(
-                  color: DesignCourseAppTheme.nearlyBlue,
+                  color: AppTheme.nearlyBlue,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
                   child: const SizedBox(
@@ -255,7 +252,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                     child: Center(
                       child: Icon(
                         Icons.favorite,
-                        color: DesignCourseAppTheme.nearlyWhite,
+                        color: AppTheme.nearlyWhite,
                         size: 30,
                       ),
                     ),
@@ -274,7 +271,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                     borderRadius: BorderRadius.circular(AppBar().preferredSize.height),
                     child: const Icon(
                       Icons.arrow_back_ios,
-                      color: DesignCourseAppTheme.nearlyBlack,
+                      color: AppTheme.nearlyBlack,
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -294,10 +291,10 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: DesignCourseAppTheme.nearlyWhite,
+          color: AppTheme.nearlyWhite,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           boxShadow: <BoxShadow>[
-            BoxShadow(color: DesignCourseAppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 8.0),
+            BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 8.0),
           ],
         ),
         child: Padding(
@@ -313,7 +310,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: DesignCourseAppTheme.nearlyBlue,
+                  color: AppTheme.nearlyBlue,
                 ),
               ),
               Text(
@@ -323,7 +320,7 @@ class CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderS
                   fontWeight: FontWeight.w200,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: DesignCourseAppTheme.grey,
+                  color: AppTheme.grey,
                 ),
               ),
             ],

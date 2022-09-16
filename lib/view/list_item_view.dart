@@ -1,4 +1,4 @@
-import 'package:alert_app/design_course_app_theme.dart';
+import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/models/category.dart';
 import 'package:alert_app/util/hex_color.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class ListItemView extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16,
                                             letterSpacing: 0.27,
-                                            color: DesignCourseAppTheme.darkerText,
+                                            color: AppTheme.darkerText,
                                           ),
                                         ),
                                       ),
@@ -77,19 +77,19 @@ class ListItemView extends StatelessWidget {
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 18,
                                                 letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme.nearlyBlue,
+                                                color: AppTheme.nearlyBlue,
                                               ),
                                             ),
                                             Container(
                                               decoration: const BoxDecoration(
-                                                color: DesignCourseAppTheme.nearlyBlue,
+                                                color: AppTheme.nearlyBlue,
                                                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
                                               ),
                                               child: const Padding(
                                                 padding: EdgeInsets.all(4.0),
                                                 child: Icon(
                                                   Icons.favorite_border_sharp,
-                                                  color: DesignCourseAppTheme.nearlyWhite,
+                                                  color: AppTheme.nearlyWhite,
                                                 ),
                                               ),
                                             )

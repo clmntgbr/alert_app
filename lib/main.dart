@@ -1,4 +1,3 @@
-import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,6 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: AppTheme.textTheme,
       ),
       home: const HomeScreen(),
     );
