@@ -2,8 +2,7 @@ import 'package:alert_app/api_service.dart';
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_user.dart';
-import 'package:alert_app/view/item_view.dart';
-import 'package:alert_app/view/list_items_view.dart';
+import 'package:alert_app/widget/items_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
@@ -53,8 +52,8 @@ class HomeScreenState extends State<HomeScreen> {
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: <Widget>[
-                      getCategoryUI(),
-                      getCategoryUI(),
+                      getExpiredItems(context),
+                      getExpireSoonItems(context),
                     ],
                   ),
                 ),
@@ -62,42 +61,6 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget getCategoryUI() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
-          child: Text(
-            'Category',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 22,
-              letterSpacing: 0.27,
-              color: AppTheme.darkerText,
-            ),
-          ),
-        ),
-        ListItemsView(
-          callBack: () {
-            moveTo();
-          },
-        ),
-      ],
-    );
-  }
-
-  void moveTo() {
-    Navigator.push<dynamic>(
-      context,
-      MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => const ItemView(),
       ),
     );
   }

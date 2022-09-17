@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_active_store.dart';
@@ -76,6 +77,16 @@ class ApiService {
     }
 
     throw Exception('Failed to load Items');
+  }
+
+  void putItemsLiked(int itemId, bool value) async {
+    Map body = {'isLiked': value};
+
+    debugPrint('PUT ${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId');
+    debugPrint(json.encode(body));
+
+    put(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId'),
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token}, body: json.encode(body));
   }
 
   Future<GetItems> getItemsExpiredLimited() async {
