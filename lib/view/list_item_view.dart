@@ -150,7 +150,7 @@ class ListItemViewState extends State<ListItemView> {
         size: 14.0,
       ));
       row.add(Text(
-        ' ${item!.expirationDate}',
+        ' ${item.expirationDate}',
         style: TextStyle(
           fontSize: 14,
           color: Colors.grey[500],
