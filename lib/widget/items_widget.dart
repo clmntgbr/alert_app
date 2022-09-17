@@ -15,7 +15,7 @@ Widget getExpiredItems(context) {
           textAlign: TextAlign.left,
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            fontSize: 22,
+            fontSize: 18,
             letterSpacing: 0.27,
             color: AppTheme.darkerText,
           ),
@@ -38,7 +38,7 @@ Widget getExpireSoonItems(context) {
           textAlign: TextAlign.left,
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            fontSize: 22,
+            fontSize: 18,
             letterSpacing: 0.27,
             color: AppTheme.darkerText,
           ),
@@ -49,11 +49,11 @@ Widget getExpireSoonItems(context) {
   );
 }
 
-void moveTo(context) {
+void moveTo(context, int? itemId) {
   Navigator.push<dynamic>(
     context,
     MaterialPageRoute<dynamic>(
-      builder: (BuildContext context) => const ItemView(),
+      builder: (BuildContext context) => ItemView(itemId: itemId),
     ),
   );
 }

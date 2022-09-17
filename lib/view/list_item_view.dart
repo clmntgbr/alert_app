@@ -26,7 +26,7 @@ class ListItemViewState extends State<ListItemView> {
 
     return MaterialButton(
       onPressed: () {
-        moveTo(context);
+        moveTo(context, item?.id);
       },
       padding: const EdgeInsets.all(0),
       child: AnimatedBuilder(

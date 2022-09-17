@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_active_store.dart';
+import 'package:alert_app/models/get_item.dart' as get_item;
 import 'package:alert_app/models/get_items.dart';
 import 'package:alert_app/models/get_user.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,18 @@ const storage = FlutterSecureStorage();
 
 class ApiService {
   Future<GetActiveStore> getActiveStore() async {
+    await storage.write(key: 'tokenApi', value: token);
+
+    final tokenApi = await storage.read(key: 'tokenApi');
+
+    if (tokenApi == null) {
+      throw Exception('Failed to load Items'); //SEND TO LOGIN PAGE
+    }
+
     debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.activeStoreEndpoint}');
 
     Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.activeStoreEndpoint}'),
-        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token});
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
 
     if (response.statusCode == 200) {
       GetActiveStore model = activeStoreFromJson(
@@ -36,11 +45,11 @@ class ApiService {
 
     final tokenApi = await storage.read(key: 'tokenApi');
 
-    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}');
-
     if (tokenApi == null) {
-      throw Exception('Failed to load Items');
+      throw Exception('Failed to load Items'); //SEND TO LOGIN PAGE
     }
+
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}');
 
     Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsExpireSoonLimitedEndpoint}'),
         headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
@@ -60,11 +69,11 @@ class ApiService {
 
     final tokenApi = await storage.read(key: 'tokenApi');
 
-    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}');
-
     if (tokenApi == null) {
-      throw Exception('Failed to load Items');
+      throw Exception('Failed to load Items'); //SEND TO LOGIN PAGE
     }
+
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}');
 
     Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}'),
         headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
@@ -80,20 +89,36 @@ class ApiService {
   }
 
   void putItemsLiked(int itemId, bool value) async {
+    await storage.write(key: 'tokenApi', value: token);
+
+    final tokenApi = await storage.read(key: 'tokenApi');
+
+    if (tokenApi == null) {
+      throw Exception('Failed to load Items'); //SEND TO LOGIN PAGE
+    }
+
     Map body = {'isLiked': value};
 
     debugPrint('PUT ${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId');
     debugPrint(json.encode(body));
 
     put(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId'),
-        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token}, body: json.encode(body));
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi}, body: json.encode(body));
   }
 
   Future<GetItems> getItemsExpiredLimited() async {
+    await storage.write(key: 'tokenApi', value: token);
+
+    final tokenApi = await storage.read(key: 'tokenApi');
+
+    if (tokenApi == null) {
+      throw Exception('Failed to load Items'); //SEND TO LOGIN PAGE
+    }
+
     debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsExpiredLimitedEndpoint}');
 
     Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsExpiredLimitedEndpoint}'),
-        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': token});
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
 
     if (response.statusCode == 200) {
       GetItems model = itemsFromJson(
@@ -103,5 +128,28 @@ class ApiService {
     }
 
     throw Exception('Failed to load Items');
+  }
+
+  Future<get_item.GetItem> getItem(int itemId, context) async {
+    await storage.write(key: 'tokenApi', value: token);
+
+    final tokenApi = await storage.read(key: 'tokenApi');
+
+    if (tokenApi == null) {
+      throw Exception('Failed to load Items'); //SEND TO LOGIN PAGE
+    }
+
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId');
+
+    Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId'),
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': tokenApi});
+
+    if (response.statusCode == 200) {
+      get_item.GetItem model = get_item.itemFromJson(response.body.toString());
+      debugPrint(model.toString());
+      return model;
+    }
+
+    throw Exception('Failed to load Item');
   }
 }
