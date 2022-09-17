@@ -1,3 +1,4 @@
+import 'package:alert_app/api_service.dart';
 import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_items.dart';
@@ -138,5 +139,95 @@ class ListItemViewState extends State<ListItemView> {
         },
       ),
     );
+  }
+
+  List<Widget> expirationDateAndIsLiked(Item? item) {
+    List<Widget> row = [];
+
+    if (item != null && item.expirationDate != null) {
+      row.add(const Icon(
+        Icons.notifications_none,
+        size: 14.0,
+      ));
+      row.add(Text(
+        ' ${item!.expirationDate}',
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey[500],
+          fontWeight: FontWeight.w400,
+        ),
+      ));
+    }
+
+    row.add(const Spacer());
+
+    row.add(
+      Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: isLiked(item),
+      ),
+    );
+
+    return row;
+  }
+
+  Container isLiked(Item? item) {
+    Container container = Container();
+    if (item != null && item.isLiked) {
+      return Container(
+        width: 35,
+        height: 35,
+        decoration: const BoxDecoration(
+          color: AppTheme.nearlyBlue,
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        ),
+        child: MaterialButton(
+          elevation: 1,
+          padding: const EdgeInsets.all(0),
+          onPressed: () {
+            ApiService().putItemsLiked(item.id, !item.isLiked);
+            item.isLiked = !item.isLiked;
+            setState(() {});
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Icon(
+              Icons.favorite_border_sharp,
+              size: 20,
+              color: HexColor('#F8FAFB'),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (item != null && !item.isLiked) {
+      return Container(
+        width: 35,
+        height: 35,
+        decoration: BoxDecoration(
+          color: HexColor('#F8FAFB'),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        ),
+        child: MaterialButton(
+          elevation: 1,
+          padding: const EdgeInsets.all(0),
+          onPressed: () {
+            ApiService().putItemsLiked(item.id, !item.isLiked);
+            item.isLiked = !item.isLiked;
+            setState(() {});
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(4.0),
+            child: Icon(
+              Icons.favorite_border_sharp,
+              size: 20,
+              color: AppTheme.nearlyBlue,
+            ),
+          ),
+        ),
+      );
+    }
+    return container;
   }
 }
