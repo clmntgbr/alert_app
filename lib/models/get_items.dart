@@ -44,6 +44,7 @@ class Item {
   String contextType;
   int id;
   String? expirationDate;
+  bool isLiked;
   Product product;
 
   Item({
@@ -51,6 +52,7 @@ class Item {
     required this.contextType,
     required this.id,
     this.expirationDate,
+    required this.isLiked,
     required this.product,
   });
 
@@ -60,13 +62,14 @@ class Item {
       contextType: json['@type'],
       id: json['id'],
       expirationDate: json['expirationDate'],
+      isLiked: json['isLiked'],
       product: Product.fromJson(json['product']),
     );
   }
 
   @override
   String toString() {
-    return '{@contextId: $contextId, contextType: $contextType, id: $id, expirationDate: $expirationDate, product: ${product.toString()}}';
+    return '{@contextId: $contextId, contextType: $contextType, id: $id, expirationDate: $expirationDate, isLiked: $isLiked, product: ${product.toString()}}';
   }
 }
 
