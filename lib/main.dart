@@ -1,4 +1,4 @@
-import 'package:alert_app/home_screen.dart';
+import 'package:alert_app/home_design_course.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +18,19 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: DesignCourseHomeScreen(),
     );
+  }
+}
+
+class HexColor extends Color {
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll('#', '');
+    if (hexColor.length == 6) {
+      hexColor = 'FF' + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
   }
 }

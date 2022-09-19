@@ -1,35 +1,25 @@
-import 'package:alert_app/api_service.dart';
-import 'package:alert_app/models/get_item.dart';
 import 'package:flutter/material.dart';
 
-import '../app_theme.dart';
+import 'design_course_app_theme.dart';
 
-class ItemView extends StatefulWidget {
-  final int? itemId;
-  const ItemView({super.key, this.itemId});
-
+class CourseInfoScreen extends StatefulWidget {
   @override
-  ItemViewState createState() => ItemViewState();
+  _CourseInfoScreenState createState() => _CourseInfoScreenState();
 }
 
-class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
+class _CourseInfoScreenState extends State<CourseInfoScreen> with TickerProviderStateMixin {
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
-
-  late Future<GetItem> item;
-
   @override
   void initState() {
     animationController = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: animationController!, curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+        .animate(CurvedAnimation(parent: animationController!, curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
-
-    item = ApiService().getItem(widget.itemId ?? 0, context);
     super.initState();
   }
 
@@ -53,7 +43,7 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final double tempHeight = MediaQuery.of(context).size.height - (MediaQuery.of(context).size.width / 1.2) + 24.0;
     return Container(
-      color: AppTheme.nearlyWhite,
+      color: DesignCourseAppTheme.nearlyWhite,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -73,10 +63,10 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppTheme.nearlyWhite,
+                  color: DesignCourseAppTheme.nearlyWhite,
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(32.0), topRight: Radius.circular(32.0)),
                   boxShadow: <BoxShadow>[
-                    BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
+                    BoxShadow(color: DesignCourseAppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                   ],
                 ),
                 child: Padding(
@@ -88,8 +78,8 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(top: 32.0, left: 18, right: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0, left: 18, right: 16),
                             child: Text(
                               'Web Design\nCourse',
                               textAlign: TextAlign.left,
@@ -97,7 +87,7 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22,
                                 letterSpacing: 0.27,
-                                color: AppTheme.darkerText,
+                                color: DesignCourseAppTheme.darkerText,
                               ),
                             ),
                           ),
@@ -107,34 +97,36 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                const Text(
+                                Text(
                                   '\$28.99',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 22,
                                     letterSpacing: 0.27,
-                                    color: AppTheme.nearlyBlue,
+                                    color: DesignCourseAppTheme.nearlyBlue,
                                   ),
                                 ),
-                                Row(
-                                  children: const <Widget>[
-                                    Text(
-                                      '4.3',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 22,
-                                        letterSpacing: 0.27,
-                                        color: AppTheme.grey,
+                                Container(
+                                  child: Row(
+                                    children: <Widget>[
+                                      Text(
+                                        '4.3',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w200,
+                                          fontSize: 22,
+                                          letterSpacing: 0.27,
+                                          color: DesignCourseAppTheme.grey,
+                                        ),
                                       ),
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: AppTheme.nearlyBlue,
-                                      size: 24,
-                                    ),
-                                  ],
+                                      Icon(
+                                        Icons.star,
+                                        color: DesignCourseAppTheme.nearlyBlue,
+                                        size: 24,
+                                      ),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
@@ -157,8 +149,8 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                             child: AnimatedOpacity(
                               duration: const Duration(milliseconds: 500),
                               opacity: opacity2,
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
                                 child: Text(
                                   'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
                                   textAlign: TextAlign.justify,
@@ -166,7 +158,7 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                                     fontWeight: FontWeight.w200,
                                     fontSize: 14,
                                     letterSpacing: 0.27,
-                                    color: AppTheme.grey,
+                                    color: DesignCourseAppTheme.grey,
                                   ),
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
@@ -183,20 +175,20 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  SizedBox(
+                                  Container(
                                     width: 48,
                                     height: 48,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: AppTheme.nearlyWhite,
+                                        color: DesignCourseAppTheme.nearlyWhite,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(16.0),
                                         ),
-                                        border: Border.all(color: AppTheme.grey.withOpacity(0.2)),
+                                        border: Border.all(color: DesignCourseAppTheme.grey.withOpacity(0.2)),
                                       ),
-                                      child: const Icon(
+                                      child: Icon(
                                         Icons.add,
-                                        color: AppTheme.nearlyBlue,
+                                        color: DesignCourseAppTheme.nearlyBlue,
                                         size: 28,
                                       ),
                                     ),
@@ -208,15 +200,18 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                                     child: Container(
                                       height: 48,
                                       decoration: BoxDecoration(
-                                        color: AppTheme.nearlyBlue,
+                                        color: DesignCourseAppTheme.nearlyBlue,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(16.0),
                                         ),
                                         boxShadow: <BoxShadow>[
-                                          BoxShadow(color: AppTheme.nearlyBlue.withOpacity(0.5), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
+                                          BoxShadow(
+                                              color: DesignCourseAppTheme.nearlyBlue.withOpacity(0.5),
+                                              offset: const Offset(1.1, 1.1),
+                                              blurRadius: 10.0),
                                         ],
                                       ),
-                                      child: const Center(
+                                      child: Center(
                                         child: Text(
                                           'Join Course',
                                           textAlign: TextAlign.left,
@@ -224,7 +219,7 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.w600,
                                             fontSize: 18,
                                             letterSpacing: 0.0,
-                                            color: AppTheme.nearlyWhite,
+                                            color: DesignCourseAppTheme.nearlyWhite,
                                           ),
                                         ),
                                       ),
@@ -251,16 +246,16 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                 alignment: Alignment.center,
                 scale: CurvedAnimation(parent: animationController!, curve: Curves.fastOutSlowIn),
                 child: Card(
-                  color: AppTheme.nearlyBlue,
+                  color: DesignCourseAppTheme.nearlyBlue,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
-                  child: const SizedBox(
+                  child: Container(
                     width: 60,
                     height: 60,
                     child: Center(
                       child: Icon(
                         Icons.favorite,
-                        color: AppTheme.nearlyWhite,
+                        color: DesignCourseAppTheme.nearlyWhite,
                         size: 30,
                       ),
                     ),
@@ -277,9 +272,9 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(AppBar().preferredSize.height),
-                    child: const Icon(
+                    child: Icon(
                       Icons.arrow_back_ios,
-                      color: AppTheme.nearlyBlack,
+                      color: DesignCourseAppTheme.nearlyBlack,
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -299,10 +294,10 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: AppTheme.nearlyWhite,
+          color: DesignCourseAppTheme.nearlyWhite,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           boxShadow: <BoxShadow>[
-            BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 8.0),
+            BoxShadow(color: DesignCourseAppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 8.0),
           ],
         ),
         child: Padding(
@@ -314,21 +309,21 @@ class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
               Text(
                 text1,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: AppTheme.nearlyBlue,
+                  color: DesignCourseAppTheme.nearlyBlue,
                 ),
               ),
               Text(
                 txt2,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w200,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: AppTheme.grey,
+                  color: DesignCourseAppTheme.grey,
                 ),
               ),
             ],
