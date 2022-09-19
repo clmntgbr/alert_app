@@ -2,6 +2,7 @@ import 'package:alert_app/api_service.dart';
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/models/get_active_store.dart';
 import 'package:alert_app/models/get_user.dart';
+import 'package:alert_app/view/dasboard_view.dart';
 import 'package:alert_app/widget/items_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +53,7 @@ class HomeScreenState extends State<HomeScreen> {
                   height: MediaQuery.of(context).size.height,
                   child: Column(
                     children: <Widget>[
+                      const DashboardScreen(),
                       getExpiredItems(context),
                       getExpireSoonItems(context),
                     ],

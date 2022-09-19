@@ -37,7 +37,7 @@ class ListItemViewState extends State<ListItemView> {
             child: Transform(
               transform: Matrix4.translationValues(100 * (1.0 - animation.value), 0.0, 0.0),
               child: InkWell(
-                splashColor: Colors.transparent,
+                splashColor: Colors.redAccent,
                 onTap: null,
                 child: SizedBox(
                   width: 280,
@@ -50,9 +50,9 @@ class ListItemViewState extends State<ListItemView> {
                           ),
                           Expanded(
                             child: Container(
-                              decoration: BoxDecoration(
-                                color: HexColor('#F8FAFB'),
-                                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                              decoration: const BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.all(Radius.circular(16.0)),
                               ),
                               child: Row(
                                 children: <Widget>[
@@ -71,9 +71,9 @@ class ListItemViewState extends State<ListItemView> {
                                             overflow: TextOverflow.fade,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 14,
+                                              fontSize: 15,
                                               letterSpacing: 0.27,
-                                              color: AppTheme.darkerText,
+                                              color: AppTheme.nearlyWhite,
                                             ),
                                           ),
                                         ),
@@ -89,10 +89,10 @@ class ListItemViewState extends State<ListItemView> {
                                                 overflow: TextOverflow.fade,
                                                 textAlign: TextAlign.left,
                                                 style: const TextStyle(
-                                                  fontWeight: FontWeight.w200,
-                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
                                                   letterSpacing: 0.27,
-                                                  color: AppTheme.grey,
+                                                  color: AppTheme.nearlyWhite,
                                                 ),
                                               ),
                                             ],
@@ -116,18 +116,25 @@ class ListItemViewState extends State<ListItemView> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 24, bottom: 24, left: 16),
-                        child: Row(
-                          children: <Widget>[
-                            ClipRRect(
-                              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                              child: AspectRatio(
-                                  aspectRatio: 1.0,
-                                  child: Image.network(
-                                    ApiConstants.baseUrl + item.product.imagePath,
-                                    fit: BoxFit.fitHeight,
-                                  )),
-                            )
-                          ],
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+                            border: Border.all(
+                              color: Colors.redAccent,
+                              width: 4,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(0),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+                            child: AspectRatio(
+                              aspectRatio: 1.0,
+                              child: Image.network(
+                                ApiConstants.baseUrl + item.product.imagePath,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -148,12 +155,13 @@ class ListItemViewState extends State<ListItemView> {
       row.add(const Icon(
         Icons.notifications_none,
         size: 14.0,
+        color: AppTheme.nearlyWhite,
       ));
       row.add(Text(
         ' ${item.expirationDate}',
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14,
-          color: Colors.grey[500],
+          color: AppTheme.nearlyWhite,
           fontWeight: FontWeight.w400,
         ),
       ));
@@ -192,7 +200,7 @@ class ListItemViewState extends State<ListItemView> {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Icon(
-              Icons.favorite_border_sharp,
+              Icons.favorite,
               size: 20,
               color: HexColor('#F8FAFB'),
             ),
@@ -205,9 +213,9 @@ class ListItemViewState extends State<ListItemView> {
       return Container(
         width: 35,
         height: 35,
-        decoration: BoxDecoration(
-          color: HexColor('#F8FAFB'),
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
         ),
         child: MaterialButton(
           elevation: 1,
@@ -222,7 +230,7 @@ class ListItemViewState extends State<ListItemView> {
             child: Icon(
               Icons.favorite_border_sharp,
               size: 20,
-              color: AppTheme.nearlyBlue,
+              color: AppTheme.nearlyWhite,
             ),
           ),
         ),
