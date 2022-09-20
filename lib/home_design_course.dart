@@ -25,7 +25,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             SizedBox(
               height: MediaQuery.of(context).padding.top,
             ),
-            getAppBarUI(),
+            //getAppBarUI(),
             Expanded(
               child: SingleChildScrollView(
                 child: Container(
