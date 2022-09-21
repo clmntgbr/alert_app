@@ -35,7 +35,7 @@ class _CategoryListViewState extends State<CategoryListView> with TickerProvider
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16, bottom: 16),
-      child: Container(
+      child: SizedBox(
         height: 134,
         width: double.infinity,
         child: FutureBuilder<bool>(

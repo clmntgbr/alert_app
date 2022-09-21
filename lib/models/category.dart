@@ -60,11 +60,11 @@ class Category {
       rating: 4.9,
     ),
     Category(
-      imagePath: 'assets/interFace3.png',
-      title: 'App Design Course',
-      lessonCount: 12,
-      money: 25,
-      rating: 4.8,
+      imagePath: 'assets/interFace4.png',
+      title: 'Web Design Course',
+      lessonCount: 28,
+      money: 208,
+      rating: 4.9,
     ),
     Category(
       imagePath: 'assets/interFace4.png',

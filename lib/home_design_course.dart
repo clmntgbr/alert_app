@@ -1,6 +1,8 @@
-import 'package:alert_app/category_list_view.dart';
+import 'package:alert_app/api_service.dart';
+import 'package:alert_app/category_list_view.dart' as category;
 import 'package:alert_app/course_info_screen.dart';
 import 'package:alert_app/main.dart';
+import 'package:alert_app/models/get_items.dart';
 import 'package:alert_app/popular_course_list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +13,27 @@ class DesignCourseHomeScreen extends StatefulWidget {
   _DesignCourseHomeScreenState createState() => _DesignCourseHomeScreenState();
 }
 
-class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
+class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with TickerProviderStateMixin {
   CategoryType categoryType = CategoryType.ui;
+  AnimationController? animationController;
+
+  late Future<GetItems> itemsExpireSoonLimited;
+  late Future<GetItems> itemsExpiredLimited;
+
+  @override
+  void initState() {
+    animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
+    itemsExpiredLimited = ApiService().getItemsExpiredLimited();
+    itemsExpireSoonLimited = ApiService().getItemsExpireSoonLimited();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(CurvedAnimation(parent: animationController!, curve: const Interval((1 / 2) * 1, 1.0, curve: Curves.fastOutSlowIn)));
+    animationController?.forward();
+
     return Container(
       color: DesignCourseAppTheme.nearlyWhite,
       child: Scaffold(
@@ -25,11 +43,12 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             SizedBox(
               height: MediaQuery.of(context).padding.top,
             ),
-            //getAppBarUI(),
+            // getAppBarUI(),
             Expanded(
               child: SingleChildScrollView(
-                child: Container(
-                  height: 1350,
+                child: SizedBox(
+                  // height: 1100,
+                  height: 1325,
                   child: Column(
                     children: <Widget>[
                       Flexible(
@@ -71,7 +90,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
         const SizedBox(
           height: 16,
         ),
-        CategoryListView(
+        category.CategoryListView(
           callBack: () {
             moveTo();
           },
@@ -115,7 +134,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.75,
             height: 64,
             child: Padding(
@@ -189,8 +208,8 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const Text(
+              children: const <Widget>[
+                Text(
                   'Choose your',
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -200,7 +219,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
                     color: DesignCourseAppTheme.grey,
                   ),
                 ),
-                const Text(
+                Text(
                   'Design Course',
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -213,7 +232,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
               ],
             ),
           ),
-          Container(
+          SizedBox(
             width: 60,
             height: 60,
             child: Image.asset('assets/userImage.png'),

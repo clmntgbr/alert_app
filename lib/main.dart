@@ -1,7 +1,7 @@
 import 'package:alert_app/home_design_course.dart';
-import 'package:flutter/material.dart';
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(
@@ -28,7 +28,7 @@ class AppState extends State<App> {
 
   Future<void> barCodeScan() async {
     await BarcodeScanner.scan().then(
-          (value) => Navigator.pop(context),
+      (value) => Navigator.pop(context),
     );
   }
 
@@ -38,7 +38,6 @@ class AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
-        // backgroundColor: HexColor('#f2f3f9'),
         body: selectedWidget,
         floatingActionButton: FloatingActionButton(
           onPressed: barCodeScan,
@@ -119,7 +118,7 @@ class AppState extends State<App> {
 
   void onPressed(index) {
     setState(
-          () {
+      () {
         selectedIndex = index;
         if (index == 0) {
           selectedWidget = DesignCourseHomeScreen();
@@ -180,7 +179,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
 
 class HexColor extends Color {
   HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
