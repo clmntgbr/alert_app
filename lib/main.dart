@@ -1,4 +1,5 @@
 import 'package:alert_app/home_design_course.dart';
+import 'package:alert_app/widget/appbar.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,12 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.white,
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: appBarUI(),
         backgroundColor: Colors.white,
         body: selectedWidget,
         floatingActionButton: FloatingActionButton(
@@ -223,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: Colors.red,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
@@ -233,15 +238,15 @@ class _MyHomePageState extends State<MyHomePage> {
         opacity: .2,
         currentIndex: currentIndex,
         onTap: changePage,
-        borderRadius: BorderRadius.vertical(
+        borderRadius: const BorderRadius.vertical(
           top: Radius.circular(16),
         ), //border radius doesn't work when the notch is enabled.
         elevation: 8,
-        tilesPadding: EdgeInsets.symmetric(
+        tilesPadding: const EdgeInsets.symmetric(
           vertical: 8.0,
         ),
         items: <BubbleBottomBarItem>[
-          BubbleBottomBarItem(
+          const BubbleBottomBarItem(
             showBadge: true,
             badge: Text("5"),
             badgeColor: Colors.deepPurpleAccent,
@@ -256,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             title: Text("Home"),
           ),
-          BubbleBottomBarItem(
+          const BubbleBottomBarItem(
               backgroundColor: Colors.deepPurple,
               icon: Icon(
                 Icons.access_time,
@@ -267,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.deepPurple,
               ),
               title: Text("Logs")),
-          BubbleBottomBarItem(
+          const BubbleBottomBarItem(
               backgroundColor: Colors.indigo,
               icon: Icon(
                 Icons.folder_open,
@@ -278,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.indigo,
               ),
               title: Text("Folders")),
-          BubbleBottomBarItem(
+          const BubbleBottomBarItem(
               backgroundColor: Colors.green,
               icon: Icon(
                 Icons.menu,

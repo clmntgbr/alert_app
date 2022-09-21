@@ -2,7 +2,7 @@ import 'package:alert_app/api_service.dart';
 import 'package:alert_app/category_list_view.dart' as category;
 import 'package:alert_app/course_info_screen.dart';
 import 'package:alert_app/main.dart';
-import 'package:alert_app/models/get_items.dart';
+import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/popular_course_list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -47,15 +47,45 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
             Expanded(
               child: SingleChildScrollView(
                 child: SizedBox(
-                  // height: 1100,
-                  height: 1325,
                   child: Column(
                     children: <Widget>[
-                      Flexible(
-                        child: getPopularCourseUI(),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                          child: Text(
+                            'Category',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              letterSpacing: 0.27,
+                              color: DesignCourseAppTheme.darkerText,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
                       ),
                       getCategoryUI(),
                       getCategoryUI(),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                        child: Text(
+                          'Category',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                            letterSpacing: 0.27,
+                            color: DesignCourseAppTheme.darkerText,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       getCategoryUI(),
                       getCategoryUI(),
                     ],
@@ -74,22 +104,6 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
-          child: Text(
-            'Category',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 22,
-              letterSpacing: 0.27,
-              color: DesignCourseAppTheme.darkerText,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
         category.CategoryListView(
           callBack: () {
             moveTo();
@@ -101,7 +115,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
 
   Widget getPopularCourseUI() {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
+      padding: const EdgeInsets.only(top: 80, left: 18, right: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,6 @@
 import 'package:alert_app/design_course_app_theme.dart';
 import 'package:alert_app/main.dart';
-import 'package:alert_app/models/category.dart';
+import 'package:alert_app/model/category.dart';
 import 'package:flutter/material.dart';
 
 class PopularCourseListView extends StatefulWidget {
