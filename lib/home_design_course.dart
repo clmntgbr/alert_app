@@ -1,7 +1,6 @@
 import 'package:alert_app/api_service.dart';
 import 'package:alert_app/category_list_view.dart' as category;
 import 'package:alert_app/course_info_screen.dart';
-import 'package:alert_app/main.dart';
 import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/popular_course_list_view.dart';
 import 'package:flutter/material.dart';
@@ -29,48 +28,33 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
   }
 
   @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: animationController!, curve: const Interval((1 / 2) * 1, 1.0, curve: Curves.fastOutSlowIn)));
     animationController?.forward();
 
-    return Container(
-      color: DesignCourseAppTheme.nearlyWhite,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).padding.top,
-            ),
-            // getAppBarUI(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  child: Column(
-                    children: <Widget>[
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
-                          child: Text(
-                            'Category',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 22,
-                              letterSpacing: 0.27,
-                              color: DesignCourseAppTheme.darkerText,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      getCategoryUI(),
-                      getCategoryUI(),
-                      const Padding(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Column(
+        children: <Widget>[
+          SizedBox(
+            height: MediaQuery.of(context).padding.top,
+          ),
+          // getAppBarUI(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                child: Column(
+                  children: <Widget>[
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
                         padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
                         child: Text(
                           'Category',
@@ -83,18 +67,60 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 16,
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    getCategoryUI(),
+                    getCategoryUI(),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                        child: Text(
+                          'Category',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                            letterSpacing: 0.27,
+                            color: DesignCourseAppTheme.darkerText,
+                          ),
+                        ),
                       ),
-                      getCategoryUI(),
-                      getCategoryUI(),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    getCategoryUI(),
+                    getCategoryUI(),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                        child: Text(
+                          'Category',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                            letterSpacing: 0.27,
+                            color: DesignCourseAppTheme.darkerText,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    getCategoryUI(),
+                    getCategoryUI(),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
