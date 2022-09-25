@@ -1,18 +1,19 @@
 import 'package:alert_app/api_service.dart';
-import 'package:alert_app/category_list_view.dart' as category;
-import 'package:alert_app/course_info_screen.dart';
 import 'package:alert_app/model/get_items.dart';
-import 'package:alert_app/popular_course_list_view.dart';
+import 'package:alert_app/screen/item_screen.dart';
+import 'package:alert_app/view/items_list_view.dart';
 import 'package:flutter/material.dart';
 
-import 'design_course_app_theme.dart';
+import '../app_theme.dart';
 
-class DesignCourseHomeScreen extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
-  _DesignCourseHomeScreenState createState() => _DesignCourseHomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with TickerProviderStateMixin {
+class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   CategoryType categoryType = CategoryType.ui;
   AnimationController? animationController;
 
@@ -35,8 +36,6 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: animationController!, curve: const Interval((1 / 2) * 1, 1.0, curve: Curves.fastOutSlowIn)));
     animationController?.forward();
 
     return Scaffold(
@@ -46,7 +45,6 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
           SizedBox(
             height: MediaQuery.of(context).padding.top,
           ),
-          // getAppBarUI(),
           Expanded(
             child: SingleChildScrollView(
               child: SizedBox(
@@ -63,7 +61,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                             fontWeight: FontWeight.w600,
                             fontSize: 22,
                             letterSpacing: 0.27,
-                            color: DesignCourseAppTheme.darkerText,
+                            color: AppTheme.darkerText,
                           ),
                         ),
                       ),
@@ -84,7 +82,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                             fontWeight: FontWeight.w600,
                             fontSize: 22,
                             letterSpacing: 0.27,
-                            color: DesignCourseAppTheme.darkerText,
+                            color: AppTheme.darkerText,
                           ),
                         ),
                       ),
@@ -105,7 +103,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                             fontWeight: FontWeight.w600,
                             fontSize: 22,
                             letterSpacing: 0.27,
-                            color: DesignCourseAppTheme.darkerText,
+                            color: AppTheme.darkerText,
                           ),
                         ),
                       ),
@@ -130,7 +128,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        category.CategoryListView(
+        ItemsListView(
           callBack: () {
             moveTo();
           },
@@ -139,30 +137,11 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
     );
   }
 
-  Widget getPopularCourseUI() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 80, left: 18, right: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Flexible(
-            child: PopularCourseListView(
-              callBack: () {
-                moveTo();
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
   void moveTo() {
     Navigator.push<dynamic>(
       context,
       MaterialPageRoute<dynamic>(
-        builder: (BuildContext context) => CourseInfoScreen(),
+        builder: (BuildContext context) => const ItemScreen(),
       ),
     );
   }
@@ -199,7 +178,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                             fontFamily: 'WorkSans',
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: DesignCourseAppTheme.nearlyBlue,
+                            color: AppTheme.nearlyBlue,
                           ),
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
@@ -256,7 +235,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                     fontWeight: FontWeight.w400,
                     fontSize: 14,
                     letterSpacing: 0.2,
-                    color: DesignCourseAppTheme.grey,
+                    color: AppTheme.grey,
                   ),
                 ),
                 Text(
@@ -266,7 +245,7 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> with Ti
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                     letterSpacing: 0.27,
-                    color: DesignCourseAppTheme.darkerText,
+                    color: AppTheme.darkerText,
                   ),
                 ),
               ],

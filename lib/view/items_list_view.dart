@@ -1,17 +1,16 @@
-import 'package:alert_app/design_course_app_theme.dart';
-import 'package:alert_app/main.dart';
+import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/model/category.dart';
 import 'package:flutter/material.dart';
 
-class CategoryListView extends StatefulWidget {
-  const CategoryListView({Key? key, this.callBack}) : super(key: key);
+class ItemsListView extends StatefulWidget {
+  const ItemsListView({Key? key, this.callBack}) : super(key: key);
 
   final Function()? callBack;
   @override
-  _CategoryListViewState createState() => _CategoryListViewState();
+  ItemsListViewState createState() => ItemsListViewState();
 }
 
-class _CategoryListViewState extends State<CategoryListView> with TickerProviderStateMixin {
+class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMixin {
   AnimationController? animationController;
 
   @override
@@ -54,7 +53,7 @@ class _CategoryListViewState extends State<CategoryListView> with TickerProvider
                       .animate(CurvedAnimation(parent: animationController!, curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn)));
                   animationController?.forward();
 
-                  return CategoryView(
+                  return ItemsView(
                     category: Category.categoryList[index],
                     animation: animation,
                     animationController: animationController,
@@ -70,8 +69,8 @@ class _CategoryListViewState extends State<CategoryListView> with TickerProvider
   }
 }
 
-class CategoryView extends StatelessWidget {
-  const CategoryView({Key? key, this.category, this.animationController, this.animation, this.callback}) : super(key: key);
+class ItemsView extends StatelessWidget {
+  const ItemsView({Key? key, this.category, this.animationController, this.animation, this.callback}) : super(key: key);
 
   final VoidCallback? callback;
   final Category? category;
@@ -104,7 +103,7 @@ class CategoryView extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: HexColor('#F8FAFB'),
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(color: DesignCourseAppTheme.nearlyBlack.withOpacity(0.1)),
+                              border: Border.all(color: AppTheme.nearlyBlack.withOpacity(0.1)),
                             ),
                             child: Row(
                               children: <Widget>[
@@ -123,7 +122,7 @@ class CategoryView extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                             fontSize: 16,
                                             letterSpacing: 0.27,
-                                            color: DesignCourseAppTheme.darkerText,
+                                            color: AppTheme.darkerText,
                                           ),
                                         ),
                                       ),
@@ -143,29 +142,27 @@ class CategoryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w200,
                                                 fontSize: 12,
                                                 letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme.grey,
+                                                color: AppTheme.grey,
                                               ),
                                             ),
-                                            Container(
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Text(
-                                                    '${category!.rating}',
-                                                    textAlign: TextAlign.left,
-                                                    style: const TextStyle(
-                                                      fontWeight: FontWeight.w200,
-                                                      fontSize: 18,
-                                                      letterSpacing: 0.27,
-                                                      color: DesignCourseAppTheme.grey,
-                                                    ),
+                                            Row(
+                                              children: <Widget>[
+                                                Text(
+                                                  '${category!.rating}',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w200,
+                                                    fontSize: 18,
+                                                    letterSpacing: 0.27,
+                                                    color: AppTheme.grey,
                                                   ),
-                                                  const Icon(
-                                                    Icons.star,
-                                                    color: DesignCourseAppTheme.nearlyBlue,
-                                                    size: 20,
-                                                  ),
-                                                ],
-                                              ),
+                                                ),
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: AppTheme.nearlyBlue,
+                                                  size: 20,
+                                                ),
+                                              ],
                                             )
                                           ],
                                         ),
@@ -183,19 +180,19 @@ class CategoryView extends StatelessWidget {
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 18,
                                                 letterSpacing: 0.27,
-                                                color: DesignCourseAppTheme.nearlyBlue,
+                                                color: AppTheme.nearlyBlue,
                                               ),
                                             ),
                                             Container(
                                               decoration: const BoxDecoration(
-                                                color: DesignCourseAppTheme.nearlyBlue,
+                                                color: AppTheme.nearlyBlue,
                                                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
                                               ),
                                               child: const Padding(
                                                 padding: EdgeInsets.all(4.0),
                                                 child: Icon(
                                                   Icons.add,
-                                                  color: DesignCourseAppTheme.nearlyWhite,
+                                                  color: AppTheme.nearlyWhite,
                                                 ),
                                               ),
                                             )
@@ -218,7 +215,7 @@ class CategoryView extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(color: DesignCourseAppTheme.nearlyBlack.withOpacity(0.2)),
+                              border: Border.all(color: AppTheme.nearlyBlack.withOpacity(0.2)),
                             ),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
