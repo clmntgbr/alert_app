@@ -1,9 +1,6 @@
-import 'package:alert_app/api_service.dart';
 import 'package:alert_app/custom_icons.dart';
-import 'package:alert_app/model/get_user.dart';
 import 'package:alert_app/screen/home_screen.dart';
 import 'package:alert_app/screen/store_screen.dart';
-import 'package:alert_app/widget/app_bar.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
@@ -33,16 +30,10 @@ class AppScreen extends StatefulWidget {
 class AppScreenState extends State<AppScreen> {
   int selectedIndex = 0;
   late Widget selectedWidget;
-  late GetUser getUser = getUserInit();
 
   @override
   void initState() {
     selectedWidget = const HomeScreen();
-    ApiService().getUser(context).then((value) {
-      setState(() {
-        getUser = value;
-      });
-    });
     super.initState();
   }
 
@@ -52,7 +43,6 @@ class AppScreenState extends State<AppScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: appBarUI(getUser),
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: true,
         extendBody: true,
