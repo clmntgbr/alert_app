@@ -1,35 +1,27 @@
-import 'package:alert_app/api_service.dart';
-import 'package:alert_app/models/get_item.dart';
 import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
 
-class ItemView extends StatefulWidget {
-  final int? itemId;
-  const ItemView({super.key, this.itemId});
+class ItemScreen extends StatefulWidget {
+  const ItemScreen({super.key});
 
   @override
-  ItemViewState createState() => ItemViewState();
+  ItemScreenState createState() => ItemScreenState();
 }
 
-class ItemViewState extends State<ItemView> with TickerProviderStateMixin {
+class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
   double opacity1 = 0.0;
   double opacity2 = 0.0;
   double opacity3 = 0.0;
-
-  late Future<GetItem> item;
-
   @override
   void initState() {
     animationController = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: animationController!, curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
-
-    item = ApiService().getItem(widget.itemId ?? 0, context);
     super.initState();
   }
 

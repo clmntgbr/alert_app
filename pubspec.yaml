@@ -1,7 +1,7 @@
 name: alert_app
 description: A new Flutter project.
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -12,14 +12,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  diamond_bottom_bar: ^1.0.0
-  bubble_bottom_bar: ^2.0.0
   google_fonts: ^3.0.1
   http: ^0.13.5
   barcode_scan2: ^4.2.1
   intl: ^0.17.0
   countup: ^0.1.4
   flutter_secure_storage: ^6.0.0
+  flutter_snake_navigationbar: ^0.6.1
 
 dev_dependencies:
   flutter_test:
@@ -32,3 +31,20 @@ flutter:
 
   assets:
     - assets/
+
+  fonts:
+    - family: SourceSerifPro
+      fonts:
+        - asset: fonts/SourceSerifPro-Bold.ttf
+
+    - family: Ubuntu
+      fonts:
+        - asset: fonts/Ubuntu-Regular.ttf
+        - asset: fonts/Ubuntu-Bold.ttf
+          weight: 700
+        - asset: fonts/Ubuntu-Light.ttf
+          weight: 200
+
+    - family: IconFont
+      fonts:
+        - asset: fonts/IconFont.ttf

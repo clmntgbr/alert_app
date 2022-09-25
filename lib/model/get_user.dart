@@ -71,5 +71,5 @@ GetUser getUserInit() {
 }
 
 User userInit() {
-  return User(contextId: '', contextType: '', email: '', id: 0, name: '', imagePath: 'assets/kdi02939Idjdk102.png');
+  return User(contextId: '', contextType: '', email: '', id: 0, name: '', imagePath: '');
 }

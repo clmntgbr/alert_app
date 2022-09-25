@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:alert_app/constants.dart';
-import 'package:alert_app/models/get_active_store.dart';
-import 'package:alert_app/models/get_item.dart' as get_item;
-import 'package:alert_app/models/get_items.dart';
-import 'package:alert_app/models/get_user.dart';
+import 'package:alert_app/model/get_active_store.dart';
+import 'package:alert_app/model/get_item.dart' as get_item;
+import 'package:alert_app/model/get_items.dart';
+import 'package:alert_app/model/get_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
@@ -40,7 +40,7 @@ class ApiService {
     throw Exception('Failed to load Items');
   }
 
-  Future<GetItems> getItemsExpireSoonLimited(BuildContext context) async {
+  Future<GetItems> getItemsExpireSoonLimited() async {
     await storage.write(key: 'tokenApi', value: token);
 
     final tokenApi = await storage.read(key: 'tokenApi');
