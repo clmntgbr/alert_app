@@ -1,11 +1,15 @@
 import 'package:alert_app/app_theme.dart';
-import 'package:alert_app/model/category.dart';
+import 'package:alert_app/constants.dart';
+import 'package:alert_app/model/get_items.dart';
+import 'package:alert_app/screen/item_screen.dart';
 import 'package:flutter/material.dart';
 
 class ItemsListView extends StatefulWidget {
-  const ItemsListView({Key? key, this.callBack}) : super(key: key);
+  ItemsListView({Key? key, required this.getItems, required this.callIndex}) : super(key: key);
 
-  final Function()? callBack;
+  int callIndex;
+  late Future<GetItems> getItems;
+
   @override
   ItemsListViewState createState() => ItemsListViewState();
 }
@@ -19,11 +23,6 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
     super.initState();
   }
 
-  Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 50));
-    return true;
-  }
-
   @override
   void dispose() {
     animationController?.dispose();
@@ -35,29 +34,35 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
     return Padding(
       padding: const EdgeInsets.only(top: 0, bottom: 16),
       child: SizedBox(
-        height: 134,
+        height: 135,
         width: double.infinity,
-        child: FutureBuilder<bool>(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        child: FutureBuilder<GetItems>(
+          future: widget.getItems,
+          builder: (BuildContext context, AsyncSnapshot<GetItems> snapshot) {
             if (!snapshot.hasData) {
-              return const SizedBox();
+              return const SizedBox(
+                height: 0,
+              );
             } else {
+              if (snapshot.data?.totalItems == 0) {
+                return const SizedBox(
+                  height: 0,
+                );
+              }
               return ListView.builder(
                 padding: const EdgeInsets.only(top: 0, bottom: 0, right: 16, left: 16),
-                itemCount: Category.categoryList.length,
+                itemCount: snapshot.data?.totalItems,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
-                  final int count = Category.categoryList.length > 10 ? 10 : Category.categoryList.length;
+                  final int count = snapshot.data?.totalItems ?? 0;
                   final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
                       .animate(CurvedAnimation(parent: animationController!, curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn)));
                   animationController?.forward();
 
                   return ItemsView(
-                    category: Category.categoryList[index],
+                    category: snapshot.data?.items[index],
                     animation: animation,
                     animationController: animationController,
-                    callback: widget.callBack,
                   );
                 },
               );
@@ -70,10 +75,9 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
 }
 
 class ItemsView extends StatelessWidget {
-  const ItemsView({Key? key, this.category, this.animationController, this.animation, this.callback}) : super(key: key);
+  const ItemsView({Key? key, required this.category, this.animationController, this.animation}) : super(key: key);
 
-  final VoidCallback? callback;
-  final Category? category;
+  final Item category;
   final AnimationController? animationController;
   final Animation<double>? animation;
 
@@ -88,7 +92,14 @@ class ItemsView extends StatelessWidget {
             transform: Matrix4.translationValues(100 * (1.0 - animation!.value), 0.0, 0.0),
             child: InkWell(
               splashColor: Colors.transparent,
-              onTap: callback,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const ItemScreen(),
+                  ),
+                );
+              },
               child: SizedBox(
                 width: 280,
                 child: Stack(
@@ -113,16 +124,21 @@ class ItemsView extends StatelessWidget {
                                 Expanded(
                                   child: Column(
                                     children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 16),
-                                        child: Text(
-                                          category!.title,
-                                          textAlign: TextAlign.left,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16,
-                                            letterSpacing: 0.27,
-                                            color: AppTheme.darkerText,
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 16),
+                                          child: Text(
+                                            category.product.name,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.fade,
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 16,
+                                              letterSpacing: 0.27,
+                                              color: AppTheme.darkerText,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -135,35 +151,19 @@ class ItemsView extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: <Widget>[
-                                            Text(
-                                              '${category!.lessonCount} lesson',
-                                              textAlign: TextAlign.left,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w200,
-                                                fontSize: 12,
-                                                letterSpacing: 0.27,
-                                                color: AppTheme.grey,
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                category.product.brand,
+                                                textAlign: TextAlign.left,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w200,
+                                                  fontSize: 12,
+                                                  letterSpacing: 0.27,
+                                                  color: AppTheme.grey,
+                                                ),
                                               ),
                                             ),
-                                            Row(
-                                              children: <Widget>[
-                                                Text(
-                                                  '${category!.rating}',
-                                                  textAlign: TextAlign.left,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w200,
-                                                    fontSize: 18,
-                                                    letterSpacing: 0.27,
-                                                    color: AppTheme.grey,
-                                                  ),
-                                                ),
-                                                const Icon(
-                                                  Icons.star,
-                                                  color: AppTheme.nearlyBlue,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            )
                                           ],
                                         ),
                                       ),
@@ -173,14 +173,19 @@ class ItemsView extends StatelessWidget {
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
-                                            Text(
-                                              '\$${category!.money}',
-                                              textAlign: TextAlign.left,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 18,
-                                                letterSpacing: 0.27,
-                                                color: AppTheme.nearlyBlue,
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 1.0),
+                                              child: Icon(
+                                                Icons.alarm_outlined,
+                                                size: 14,
+                                                color: Colors.grey.withOpacity(0.8),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                ' ${category.expirationDate}',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(fontSize: 14, color: Colors.grey.withOpacity(0.8)),
                                               ),
                                             ),
                                             Container(
@@ -191,7 +196,7 @@ class ItemsView extends StatelessWidget {
                                               child: const Padding(
                                                 padding: EdgeInsets.all(4.0),
                                                 child: Icon(
-                                                  Icons.add,
+                                                  Icons.delete_outline,
                                                   color: AppTheme.nearlyWhite,
                                                 ),
                                               ),
@@ -219,7 +224,13 @@ class ItemsView extends StatelessWidget {
                             ),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                              child: AspectRatio(aspectRatio: 1.0, child: Image.asset(category!.imagePath)),
+                              child: AspectRatio(
+                                aspectRatio: 1.0,
+                                child: Image.network(
+                                  ApiConstants.baseUrl + category.product.imagePath,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           )
                         ],

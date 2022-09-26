@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:alert_app/api_service.dart';
 import 'package:alert_app/custom_icons.dart';
 import 'package:alert_app/screen/home_screen.dart';
 import 'package:alert_app/screen/store_screen.dart';
@@ -12,9 +15,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HttpOverrides.global = MyHttpOverrides();
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SnakeNavigationBar Example ',
       home: AppScreen(),
     );
   }

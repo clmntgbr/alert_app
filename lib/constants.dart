@@ -4,8 +4,8 @@ class ApiConstants {
   static String storesEndpoint = '/api/stores';
   static String activeStoreEndpoint = '/api/store/active';
   static String itemsEndpoint = '/api/items';
-  static String itemsExpireSoonLimitedEndpoint = '/api/items/expire_soon/limited';
-  static String itemsExpiredLimitedEndpoint = '/api/items/expired/limited';
+  static String itemsExpireSoonEndpoint = '/api/items/expire_soon';
+  static String itemsExpiredEndpoint = '/api/items/expired';
   static String productEanEndpoint = '/api/product';
   static String authenticateEndpoint = '/api/authenticate';
 }
