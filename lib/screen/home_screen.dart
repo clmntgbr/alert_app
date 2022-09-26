@@ -26,7 +26,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
     getItemsExpireSoonFirst = ApiService().getItemsExpireSoon();
-    getItemsExpireSoonSecond = ApiService().getItemsExpireSoon(index: 0, limit: 0);
+    getItemsExpireSoonSecond = ApiService().getItemsExpireSoon(index: 4);
 
     getItemsExpiredFirst = ApiService().getItemsExpired();
     getItemsExpiredSecond = ApiService().getItemsExpired(index: 4);

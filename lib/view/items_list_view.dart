@@ -32,24 +32,24 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, bottom: 16),
-      child: SizedBox(
-        height: 135,
-        width: double.infinity,
-        child: FutureBuilder<GetItems>(
-          future: widget.getItems,
-          builder: (BuildContext context, AsyncSnapshot<GetItems> snapshot) {
-            if (!snapshot.hasData) {
+      padding: const EdgeInsets.only(top: 0, bottom: 5),
+      child: FutureBuilder<GetItems>(
+        future: widget.getItems,
+        builder: (BuildContext context, AsyncSnapshot<GetItems> snapshot) {
+          if (!snapshot.hasData) {
+            return const SizedBox(
+              height: 0,
+            );
+          } else {
+            if (snapshot.data?.totalItems == 0) {
               return const SizedBox(
                 height: 0,
               );
-            } else {
-              if (snapshot.data?.totalItems == 0) {
-                return const SizedBox(
-                  height: 0,
-                );
-              }
-              return ListView.builder(
+            }
+            return SizedBox(
+              height: 135,
+              width: double.infinity,
+              child: ListView.builder(
                 padding: const EdgeInsets.only(top: 0, bottom: 0, right: 16, left: 16),
                 itemCount: snapshot.data?.totalItems,
                 scrollDirection: Axis.horizontal,
@@ -65,10 +65,10 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                     animationController: animationController,
                   );
                 },
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
@@ -129,7 +129,7 @@ class ItemsView extends StatelessWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.only(top: 16),
                                           child: Text(
-                                            category.product.name,
+                                            '${category.id} ${category.product.name}',
                                             maxLines: 2,
                                             overflow: TextOverflow.fade,
                                             textAlign: TextAlign.left,
