@@ -91,7 +91,7 @@ class ItemsView extends StatelessWidget {
           child: Transform(
             transform: Matrix4.translationValues(100 * (1.0 - animation!.value), 0.0, 0.0),
             child: InkWell(
-              splashColor: Colors.transparent,
+              splashColor: AppTheme.transparent,
               onTap: () {
                 Navigator.push(
                   context,
@@ -114,7 +114,7 @@ class ItemsView extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: HexColor('#F8FAFB'),
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(color: AppTheme.nearlyBlack.withOpacity(0.1)),
+                              border: Border.all(color: AppTheme.black.withOpacity(0.1)),
                             ),
                             child: Row(
                               children: <Widget>[
@@ -178,26 +178,26 @@ class ItemsView extends StatelessWidget {
                                               child: Icon(
                                                 Icons.alarm_outlined,
                                                 size: 14,
-                                                color: Colors.grey.withOpacity(0.8),
+                                                color: AppTheme.grey.withOpacity(0.8),
                                               ),
                                             ),
                                             Expanded(
                                               child: Text(
                                                 ' ${category.expirationDate}',
                                                 overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(fontSize: 14, color: Colors.grey.withOpacity(0.8)),
+                                                style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
                                               ),
                                             ),
                                             Container(
                                               decoration: const BoxDecoration(
-                                                color: AppTheme.nearlyBlue,
+                                                color: AppTheme.secondaryColor,
                                                 borderRadius: BorderRadius.all(Radius.circular(8.0)),
                                               ),
                                               child: const Padding(
                                                 padding: EdgeInsets.all(4.0),
                                                 child: Icon(
                                                   Icons.delete_outline,
-                                                  color: AppTheme.nearlyWhite,
+                                                  color: AppTheme.white,
                                                 ),
                                               ),
                                             )
@@ -220,7 +220,7 @@ class ItemsView extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(color: AppTheme.nearlyBlack.withOpacity(0.2)),
+                              border: Border.all(color: AppTheme.black.withOpacity(0.2)),
                             ),
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(16.0)),

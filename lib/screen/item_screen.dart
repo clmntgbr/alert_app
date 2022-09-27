@@ -45,9 +45,9 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final double tempHeight = MediaQuery.of(context).size.height - (MediaQuery.of(context).size.width / 1.2) + 24.0;
     return Container(
-      color: AppTheme.nearlyWhite,
+      color: AppTheme.white,
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppTheme.transparent,
         body: Stack(
           children: <Widget>[
             Column(
@@ -65,7 +65,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
               right: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppTheme.nearlyWhite,
+                  color: AppTheme.white,
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(32.0), topRight: Radius.circular(32.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
@@ -106,7 +106,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                                     fontWeight: FontWeight.w200,
                                     fontSize: 22,
                                     letterSpacing: 0.27,
-                                    color: AppTheme.nearlyBlue,
+                                    color: AppTheme.secondaryColor,
                                   ),
                                 ),
                                 Row(
@@ -123,7 +123,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                                     ),
                                     Icon(
                                       Icons.star,
-                                      color: AppTheme.nearlyBlue,
+                                      color: AppTheme.secondaryColor,
                                       size: 24,
                                     ),
                                   ],
@@ -180,7 +180,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                                     height: 48,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: AppTheme.nearlyWhite,
+                                        color: AppTheme.white,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(16.0),
                                         ),
@@ -188,7 +188,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                                       ),
                                       child: const Icon(
                                         Icons.add,
-                                        color: AppTheme.nearlyBlue,
+                                        color: AppTheme.secondaryColor,
                                         size: 28,
                                       ),
                                     ),
@@ -200,12 +200,13 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                                     child: Container(
                                       height: 48,
                                       decoration: BoxDecoration(
-                                        color: AppTheme.nearlyBlue,
+                                        color: AppTheme.secondaryColor,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(16.0),
                                         ),
                                         boxShadow: <BoxShadow>[
-                                          BoxShadow(color: AppTheme.nearlyBlue.withOpacity(0.5), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
+                                          BoxShadow(
+                                              color: AppTheme.secondaryColor.withOpacity(0.5), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
                                         ],
                                       ),
                                       child: const Center(
@@ -216,7 +217,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                                             fontWeight: FontWeight.w600,
                                             fontSize: 18,
                                             letterSpacing: 0.0,
-                                            color: AppTheme.nearlyWhite,
+                                            color: AppTheme.white,
                                           ),
                                         ),
                                       ),
@@ -243,7 +244,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                 alignment: Alignment.center,
                 scale: CurvedAnimation(parent: animationController!, curve: Curves.fastOutSlowIn),
                 child: Card(
-                  color: AppTheme.nearlyBlue,
+                  color: AppTheme.secondaryColor,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
                   child: const SizedBox(
@@ -252,7 +253,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                     child: Center(
                       child: Icon(
                         Icons.favorite,
-                        color: AppTheme.nearlyWhite,
+                        color: AppTheme.white,
                         size: 30,
                       ),
                     ),
@@ -266,12 +267,12 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                 width: AppBar().preferredSize.height,
                 height: AppBar().preferredSize.height,
                 child: Material(
-                  color: Colors.transparent,
+                  color: AppTheme.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(AppBar().preferredSize.height),
                     child: const Icon(
                       Icons.arrow_back_ios,
-                      color: AppTheme.nearlyBlack,
+                      color: AppTheme.black,
                     ),
                     onTap: () {
                       Navigator.pop(context);
@@ -291,7 +292,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: AppTheme.nearlyWhite,
+          color: AppTheme.white,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(color: AppTheme.grey.withOpacity(0.2), offset: const Offset(1.1, 1.1), blurRadius: 8.0),
@@ -310,7 +311,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: AppTheme.nearlyBlue,
+                  color: AppTheme.secondaryColor,
                 ),
               ),
               Text(

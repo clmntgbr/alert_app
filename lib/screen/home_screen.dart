@@ -44,7 +44,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     animationController?.forward();
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppTheme.transparent,
       body: Column(
         children: <Widget>[
           SizedBox(
@@ -62,12 +62,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: Text(
                           'Category',
                           textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 22,
-                            letterSpacing: 0.27,
-                            color: AppTheme.darkerText,
-                          ),
+                          style: AppTheme.headline,
                         ),
                       ),
                     ),

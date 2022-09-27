@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:alert_app/api_service.dart';
+import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/custom_icons.dart';
 import 'package:alert_app/screen/home_screen.dart';
 import 'package:alert_app/screen/store_screen.dart';
@@ -45,7 +46,7 @@ class AppScreenState extends State<AppScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppTheme.white,
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: true,
         extendBody: true,
@@ -61,9 +62,9 @@ class AppScreenState extends State<AppScreen> {
             ),
           ),
           padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
-          snakeViewColor: Colors.redAccent,
-          selectedItemColor: SnakeShape.circle == SnakeShape.indicator ? Colors.redAccent : null,
-          unselectedItemColor: Colors.black,
+          snakeViewColor: AppTheme.secondaryColor,
+          selectedItemColor: SnakeShape.circle == SnakeShape.indicator ? AppTheme.secondaryColor : null,
+          unselectedItemColor: AppTheme.black,
           showUnselectedLabels: false,
           showSelectedLabels: false,
           currentIndex: selectedIndex,
