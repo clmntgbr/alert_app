@@ -102,4 +102,19 @@ class ApiItem {
 
     throw Exception('Failed to load Item');
   }
+
+  void deleteItem(int itemId) async {
+    await storage.write(key: 'apiToken', value: ApiConstants.apiToken);
+
+    final apiToken = await storage.read(key: 'apiToken');
+
+    if (apiToken == null) {
+      throw Exception('Failed to load Items');
+    }
+
+    debugPrint('DELETE ${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId');
+
+    delete(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsEndpoint}/$itemId'),
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': apiToken});
+  }
 }

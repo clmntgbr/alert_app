@@ -1,3 +1,4 @@
+import 'package:alert_app/api/api_item.dart';
 import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/constants.dart';
 import 'package:alert_app/model/get_items.dart';
@@ -197,6 +198,7 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                                                                 size: 26,
                                                               ),
                                                               onPressed: () {
+                                                                ApiItem().deleteItem(item.id);
                                                                 setState(() {
                                                                   totalItems--;
                                                                   item.isDeleted = true;
