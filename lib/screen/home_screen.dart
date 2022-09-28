@@ -55,12 +55,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: SizedBox(
                 child: Column(
                   children: <Widget>[
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
                         child: Text(
-                          'Category',
+                          'Produits bientôt expirés',
                           textAlign: TextAlign.left,
                           style: AppTheme.headline,
                         ),
@@ -71,19 +71,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     getCategoryUI(getItemsExpireSoonFirst, 0),
                     getCategoryUI(getItemsExpireSoonSecond, 4),
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
                         child: Text(
-                          'Category',
+                          'Produits déjà expirés',
                           textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 22,
-                            letterSpacing: 0.27,
-                            color: AppTheme.darkerText,
-                          ),
+                          style: AppTheme.headline,
                         ),
                       ),
                     ),

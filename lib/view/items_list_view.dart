@@ -74,7 +74,7 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
   }
 }
 
-class ItemsView extends StatelessWidget {
+class ItemsView extends StatefulWidget {
   const ItemsView({Key? key, required this.category, this.animationController, this.animation}) : super(key: key);
 
   final Item category;
@@ -82,14 +82,34 @@ class ItemsView extends StatelessWidget {
   final Animation<double>? animation;
 
   @override
+  ItemsViewState createState() => ItemsViewState();
+}
+
+class ItemsViewState extends State<ItemsView> {
+  bool isDeleted = false;
+
+  @override
   Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
+    @override
+    void initState() {
+      super.initState();
+    }
+
+    debugPrint('$isDeleted');
+
+    if (isDeleted) {
+      return Container();
+    }
+
     return AnimatedBuilder(
-      animation: animationController!,
+      animation: widget.animationController!,
       builder: (BuildContext context, Widget? child) {
         return FadeTransition(
-          opacity: animation!,
+          opacity: widget.animation!,
           child: Transform(
-            transform: Matrix4.translationValues(100 * (1.0 - animation!.value), 0.0, 0.0),
+            transform: Matrix4.translationValues(100 * (1.0 - widget.animation!.value), 0.0, 0.0),
             child: InkWell(
               splashColor: AppTheme.transparent,
               onTap: () {
@@ -129,7 +149,7 @@ class ItemsView extends StatelessWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.only(top: 16),
                                           child: Text(
-                                            '${category.id} ${category.product.name}',
+                                            '${widget.category.id} ${widget.category.product.name}',
                                             maxLines: 2,
                                             overflow: TextOverflow.fade,
                                             textAlign: TextAlign.left,
@@ -146,7 +166,7 @@ class ItemsView extends StatelessWidget {
                                         child: SizedBox(),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(right: 16, bottom: 8),
+                                        padding: const EdgeInsets.only(right: 16, bottom: 0),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,7 +174,9 @@ class ItemsView extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                category.product.brand,
+                                                widget.category.product.brand,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.fade,
                                                 textAlign: TextAlign.left,
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.w200,
@@ -168,39 +190,55 @@ class ItemsView extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(bottom: 16, right: 16),
+                                        padding: const EdgeInsets.only(bottom: 10, right: 10),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Padding(
-                                              padding: const EdgeInsets.only(top: 1.0),
+                                              padding: const EdgeInsets.only(top: 5.0),
                                               child: Icon(
                                                 Icons.alarm_outlined,
                                                 size: 14,
                                                 color: AppTheme.grey.withOpacity(0.8),
                                               ),
                                             ),
-                                            Expanded(
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 4.0),
                                               child: Text(
-                                                ' ${category.expirationDate}',
+                                                '${widget.category.expirationDate}',
+                                                maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
                                               ),
                                             ),
                                             Container(
                                               decoration: const BoxDecoration(
-                                                color: AppTheme.secondaryColor,
-                                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                color: AppTheme.transparent,
                                               ),
-                                              child: const Padding(
-                                                padding: EdgeInsets.all(4.0),
-                                                child: Icon(
-                                                  Icons.delete_outline,
-                                                  color: AppTheme.white,
+                                              alignment: Alignment.center,
+                                              width: 26,
+                                              height: 35,
+                                              padding: const EdgeInsets.all(0),
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.delete_outline_rounded,
+                                                  color: AppTheme.secondaryColor,
+                                                  size: 26,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isDeleted = true;
+                                                  });
+                                                },
+                                                style: IconButton.styleFrom(
+                                                  backgroundColor: Colors.redAccent,
+                                                  focusColor: colors.onSurfaceVariant.withOpacity(0.12),
+                                                  highlightColor: colors.onSurface.withOpacity(0.12),
                                                 ),
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -227,7 +265,7 @@ class ItemsView extends StatelessWidget {
                               child: AspectRatio(
                                 aspectRatio: 1.0,
                                 child: Image.network(
-                                  ApiConstants.baseUrl + category.product.imagePath,
+                                  ApiConstants.baseUrl + widget.category.product.imagePath,
                                   fit: BoxFit.cover,
                                 ),
                               ),
