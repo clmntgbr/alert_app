@@ -41,10 +41,9 @@ class AppTheme {
     color: darkerText,
   );
 
-  static TextStyle headline = GoogleFonts.paytoneOne(
+  static TextStyle headline = GoogleFonts.lilitaOne(
     fontWeight: FontWeight.w200,
-    letterSpacing: 0,
-    fontSize: 20,
+    fontSize: 22,
     color: secondaryColor,
   );
 

@@ -62,7 +62,7 @@ class ApiItem {
     throw Exception('Failed to load Items');
   }
 
-  void putItemsLiked(int itemId, bool value) async {
+  void putItemLiked(int itemId, bool value) async {
     await storage.write(key: 'apiToken', value: ApiConstants.apiToken);
 
     final apiToken = await storage.read(key: 'apiToken');
@@ -96,7 +96,6 @@ class ApiItem {
 
     if (response.statusCode == 200) {
       GetItem model = itemFromJson(response.body.toString());
-      debugPrint(model.toString());
       return model;
     }
 

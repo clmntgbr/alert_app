@@ -58,7 +58,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
+                        padding: const EdgeInsets.only(top: 10.0, left: 18, right: 16),
                         child: Text(
                           'Produits bientôt expirés',
                           textAlign: TextAlign.left,
@@ -76,7 +76,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
                         child: Text(
-                          'Produits déjà expirés',
+                          'Produits expirés',
                           textAlign: TextAlign.left,
                           style: AppTheme.headline,
                         ),

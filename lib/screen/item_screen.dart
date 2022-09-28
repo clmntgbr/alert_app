@@ -1,44 +1,56 @@
+import 'package:alert_app/api/api_item.dart';
+import 'package:alert_app/constants.dart';
+import 'package:alert_app/model/get_item.dart';
 import 'package:flutter/material.dart';
 
 import '../app_theme.dart';
 
 class ItemScreen extends StatefulWidget {
-  const ItemScreen({super.key});
+  ItemScreen({super.key, required this.itemId});
+
+  int itemId;
 
   @override
   ItemScreenState createState() => ItemScreenState();
 }
 
-class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
+class ItemScreenState extends State<ItemScreen> {
   final double infoHeight = 364.0;
-  AnimationController? animationController;
-  Animation<double>? animation;
-  double opacity1 = 0.0;
-  double opacity2 = 0.0;
-  double opacity3 = 0.0;
+  late GetItem item = getItemInit();
+
   @override
   void initState() {
-    animationController = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this);
-    animation = Tween<double>(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: animationController!, curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
-    setData();
+    ApiItem().getItem(widget.itemId, context).then((value) {
+      setState(() {
+        item = value;
+      });
+    });
     super.initState();
   }
 
-  Future<void> setData() async {
-    animationController?.forward();
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity1 = 1.0;
-    });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity2 = 1.0;
-    });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity3 = 1.0;
-    });
+  Widget getImageProfile(GetItem item) {
+    if (item.product.id == 0) {
+      return Image.asset('assets/webInterFace.png');
+    }
+
+    return Image.network(
+      ApiConstants.baseUrl + item.product.imagePath,
+      fit: BoxFit.contain,
+    );
+  }
+
+  Color getLikeIconBackgroundColor(GetItem item) {
+    if (item.isLiked) {
+      return AppTheme.secondaryColor;
+    }
+    return AppTheme.white;
+  }
+
+  Color getLikeIconColor(GetItem item) {
+    if (item.isLiked) {
+      return AppTheme.white;
+    }
+    return AppTheme.secondaryColor;
   }
 
   @override
@@ -54,7 +66,7 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1.2,
-                  child: Image.asset('assets/webInterFace.png'),
+                  child: getImageProfile(item),
                 ),
               ],
             ),
@@ -80,12 +92,12 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          const Padding(
-                            padding: EdgeInsets.only(top: 32.0, left: 18, right: 16),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0, left: 18, right: 16),
                             child: Text(
-                              'Web Design\nCourse',
+                              item.product.name,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22,
                                 letterSpacing: 0.27,
@@ -131,100 +143,87 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: <Widget>[
-                                  getTimeBoxUI('24', 'Classe'),
-                                  getTimeBoxUI('2hours', 'Time'),
-                                  getTimeBoxUI('24', 'Seat'),
-                                ],
-                              ),
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              children: <Widget>[
+                                getTimeBoxUI('24', 'Classe'),
+                                getTimeBoxUI('2hours', 'Time'),
+                                getTimeBoxUI('24', 'Seat'),
+                              ],
                             ),
                           ),
-                          Expanded(
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity2,
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-                                child: Text(
-                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 14,
-                                    letterSpacing: 0.27,
-                                    color: AppTheme.grey,
-                                  ),
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
+                          const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+                              child: Text(
+                                'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 14,
+                                  letterSpacing: 0.27,
+                                  color: AppTheme.grey,
                                 ),
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 48,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                SizedBox(
+                                  width: 48,
+                                  height: 48,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.white,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(16.0),
+                                      ),
+                                      border: Border.all(color: AppTheme.grey.withOpacity(0.2)),
+                                    ),
+                                    child: const Icon(
+                                      Icons.add,
+                                      color: AppTheme.secondaryColor,
+                                      size: 28,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: Container(
                                     height: 48,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.white,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        border: Border.all(color: AppTheme.grey.withOpacity(0.2)),
+                                    decoration: BoxDecoration(
+                                      color: AppTheme.secondaryColor,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(16.0),
                                       ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        color: AppTheme.secondaryColor,
-                                        size: 28,
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(color: AppTheme.secondaryColor.withOpacity(0.5), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
+                                      ],
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        'Join Course',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18,
+                                          letterSpacing: 0.0,
+                                          color: AppTheme.white,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 48,
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.secondaryColor,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                              color: AppTheme.secondaryColor.withOpacity(0.5), offset: const Offset(1.1, 1.1), blurRadius: 10.0),
-                                        ],
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Join Course',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            letterSpacing: 0.0,
-                                            color: AppTheme.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                )
+                              ],
                             ),
                           ),
                           SizedBox(
@@ -240,20 +239,25 @@ class ItemScreenState extends State<ItemScreen> with TickerProviderStateMixin {
             Positioned(
               top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
               right: 35,
-              child: ScaleTransition(
-                alignment: Alignment.center,
-                scale: CurvedAnimation(parent: animationController!, curve: Curves.fastOutSlowIn),
+              child: MaterialButton(
+                padding: const EdgeInsets.all(0),
+                onPressed: () {
+                  ApiItem().putItemLiked(item.id, !item.isLiked);
+                  setState(() {
+                    item.isLiked = !item.isLiked;
+                  });
+                },
                 child: Card(
-                  color: AppTheme.secondaryColor,
+                  color: getLikeIconBackgroundColor(item),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
                   elevation: 10.0,
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: 60,
                     height: 60,
                     child: Center(
                       child: Icon(
                         Icons.favorite,
-                        color: AppTheme.white,
+                        color: getLikeIconColor(item),
                         size: 30,
                       ),
                     ),

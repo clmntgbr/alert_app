@@ -7,6 +7,7 @@ class GetItem {
   String contextId;
   String contextType;
   int id;
+  bool isLiked;
   String? expirationDate;
   Product product;
 
@@ -20,6 +21,7 @@ class GetItem {
     required this.contextId,
     required this.contextType,
     required this.id,
+    required this.isLiked,
     this.expirationDate,
     required this.product,
   });
@@ -30,6 +32,7 @@ class GetItem {
         contextId: json['@id'],
         contextType: json['@type'],
         id: json['id'],
+        isLiked: json['isLiked'],
         expirationDate: json['expirationDate'],
         product: Product.fromJson(json['product']));
   }
@@ -118,4 +121,35 @@ class Nutrition {
   String toString() {
     return '{@contextId: $contextId, contextType: $contextType, id: $id, ecoscoreGrade: $ecoscoreGrade, ecoscoreScore: $ecoscoreScore, ingredientsText: $ingredientsText, nutriscoreGrade: $nutriscoreGrade, nutriscoreScore: $nutriscoreScore, quantity: $quantity}';
   }
+}
+
+GetItem getItemInit() {
+  return GetItem(
+    context: '',
+    contextId: '',
+    contextType: '',
+    id: 0,
+    isLiked: false,
+    product: productInit(),
+  );
+}
+
+Product productInit() {
+  return Product(
+    contextId: '',
+    contextType: '',
+    id: 0,
+    brand: '',
+    imagePath: '',
+    name: '',
+    nutrition: nutritionInit(),
+  );
+}
+
+Nutrition nutritionInit() {
+  return Nutrition(
+    contextId: '',
+    contextType: '',
+    id: 0,
+  );
 }

@@ -86,7 +86,9 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (BuildContext context) => const ItemScreen(),
+                                builder: (BuildContext context) => ItemScreen(
+                                  itemId: item.id,
+                                ),
                               ),
                             );
                           },
@@ -119,9 +121,9 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                                                     child: Padding(
                                                       padding: const EdgeInsets.only(top: 16),
                                                       child: Text(
-                                                        '${item.id} ${item.product.name}',
+                                                        item.product.name,
                                                         maxLines: 2,
-                                                        overflow: TextOverflow.fade,
+                                                        overflow: TextOverflow.ellipsis,
                                                         textAlign: TextAlign.left,
                                                         style: const TextStyle(
                                                           fontWeight: FontWeight.w600,
