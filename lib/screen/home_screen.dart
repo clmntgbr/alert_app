@@ -1,4 +1,4 @@
-import 'package:alert_app/api_service.dart';
+import 'package:alert_app/api/api_item.dart';
 import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/view/items_list_view.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  CategoryType categoryType = CategoryType.ui;
   AnimationController? animationController;
 
   late Future<GetItems> getItemsExpireSoonFirst;
@@ -25,11 +24,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
-    getItemsExpireSoonFirst = ApiService().getItemsExpireSoon();
-    getItemsExpireSoonSecond = ApiService().getItemsExpireSoon(index: 4);
+    getItemsExpireSoonFirst = ApiItem().getItemsExpireSoon();
+    getItemsExpireSoonSecond = ApiItem().getItemsExpireSoon(index: 4);
 
-    getItemsExpiredFirst = ApiService().getItemsExpired();
-    getItemsExpiredSecond = ApiService().getItemsExpired(index: 4);
+    getItemsExpiredFirst = ApiItem().getItemsExpired();
+    getItemsExpiredSecond = ApiItem().getItemsExpired(index: 4);
+
     super.initState();
   }
 
@@ -112,10 +112,4 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ],
     );
   }
-}
-
-enum CategoryType {
-  ui,
-  coding,
-  basic,
 }

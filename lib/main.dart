@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:alert_app/api_service.dart';
+import 'package:alert_app/api/api_overrides.dart';
 import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/custom_icons.dart';
 import 'package:alert_app/screen/home_screen.dart';

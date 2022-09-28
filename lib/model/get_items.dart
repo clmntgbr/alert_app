@@ -45,7 +45,7 @@ class Item {
   int id;
   String? expirationDate;
   bool isLiked;
-  bool? isDeleted;
+  bool isDeleted;
   Product product;
 
   Item({
@@ -54,7 +54,7 @@ class Item {
     required this.id,
     this.expirationDate,
     required this.isLiked,
-    this.isDeleted,
+    required this.isDeleted,
     required this.product,
   });
 
