@@ -4,6 +4,7 @@ import 'package:alert_app/constants.dart';
 import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/screen/item_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:indexed/indexed.dart';
 
 class ItemsListView extends StatefulWidget {
   ItemsListView({Key? key, required this.getItems, required this.callIndex}) : super(key: key);
@@ -94,106 +95,123 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                           },
                           child: SizedBox(
                             width: 280,
+                            height: double.infinity,
                             child: Stack(
                               children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    const SizedBox(
-                                      width: 48,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: HexColor('#F8FAFB'),
-                                          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                                          border: Border.all(color: AppTheme.black.withOpacity(0.1)),
+                                Indexer(
+                                  children: [
+                                    Indexed(
+                                      index: 10,
+                                      child: Positioned(
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                            color: AppTheme.transparent,
+                                          ),
+                                          alignment: Alignment.center,
+                                          width: 40,
+                                          height: 40,
+                                          padding: const EdgeInsets.all(0),
+                                          child: IconButton(
+                                              icon: const Icon(
+                                                Icons.delete_outline_rounded,
+                                                color: AppTheme.secondaryColor,
+                                                size: 26,
+                                              ),
+                                              onPressed: () {
+                                                ApiItem().deleteItem(item.id);
+                                                setState(() {
+                                                  totalItems--;
+                                                  item.isDeleted = true;
+                                                });
+                                              }),
                                         ),
+                                      ),
+                                    ),
+                                    Indexed(
+                                      index: 2,
+                                      child: Positioned(
+                                        left: (280 - 48) / 2,
+                                        bottom: 10,
                                         child: Row(
                                           children: <Widget>[
-                                            const SizedBox(
-                                              width: 48 + 24.0,
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 3.0),
+                                              child: Icon(
+                                                Icons.alarm_outlined,
+                                                size: 14,
+                                                color: AppTheme.grey.withOpacity(0.8),
+                                              ),
                                             ),
-                                            Expanded(
-                                              child: Column(
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 4.0, left: 2),
+                                              child: Text(
+                                                '${item.expirationDate}',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Indexed(
+                                      index: 1,
+                                      child: Row(
+                                        children: <Widget>[
+                                          const SizedBox(
+                                            width: 48,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: HexColor('#F8FAFB'),
+                                                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                                                border: Border.all(color: AppTheme.black.withOpacity(0.1)),
+                                              ),
+                                              child: Row(
                                                 children: <Widget>[
-                                                  Align(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(top: 16),
-                                                      child: Text(
-                                                        item.product.name,
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow.fade,
-                                                        textAlign: TextAlign.left,
-                                                        style: const TextStyle(
-                                                          fontWeight: FontWeight.w600,
-                                                          fontSize: 16,
-                                                          letterSpacing: 0.27,
-                                                          color: AppTheme.darkerText,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  const SizedBox(
+                                                    width: 48 + 24.0,
                                                   ),
-                                                  Align(
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Text(
-                                                      item.product.brand,
-                                                      maxLines: 1,
-                                                      overflow: TextOverflow.fade,
-                                                      textAlign: TextAlign.left,
-                                                      style: const TextStyle(
-                                                        fontWeight: FontWeight.w200,
-                                                        fontSize: 12,
-                                                        letterSpacing: 0.27,
-                                                        color: AppTheme.grey,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(bottom: 10, right: 10),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                  Expanded(
+                                                    child: Column(
                                                       children: <Widget>[
-                                                        Padding(
-                                                          padding: const EdgeInsets.only(top: 5.0),
-                                                          child: Icon(
-                                                            Icons.alarm_outlined,
-                                                            size: 14,
-                                                            color: AppTheme.grey.withOpacity(0.8),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.only(top: 4.0),
-                                                          child: Text(
-                                                            '${item.expirationDate}',
-                                                            maxLines: 1,
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
-                                                          ),
-                                                        ),
-                                                        Container(
-                                                          decoration: const BoxDecoration(
-                                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                            color: AppTheme.transparent,
-                                                          ),
-                                                          alignment: Alignment.center,
-                                                          width: 26,
-                                                          height: 35,
-                                                          padding: const EdgeInsets.all(0),
-                                                          child: IconButton(
-                                                              icon: const Icon(
-                                                                Icons.delete_outline_rounded,
-                                                                color: AppTheme.secondaryColor,
-                                                                size: 26,
+                                                        Align(
+                                                          alignment: Alignment.centerLeft,
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.only(top: 16),
+                                                            child: Text(
+                                                              item.product.name,
+                                                              maxLines: 3,
+                                                              overflow: TextOverflow.fade,
+                                                              textAlign: TextAlign.left,
+                                                              style: const TextStyle(
+                                                                fontWeight: FontWeight.w600,
+                                                                fontSize: 16,
+                                                                letterSpacing: 0.27,
+                                                                color: AppTheme.darkerText,
                                                               ),
-                                                              onPressed: () {
-                                                                ApiItem().deleteItem(item.id);
-                                                                setState(() {
-                                                                  totalItems--;
-                                                                  item.isDeleted = true;
-                                                                });
-                                                              }),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment.centerLeft,
+                                                          child: Text(
+                                                            item.product.brand,
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.fade,
+                                                            textAlign: TextAlign.left,
+                                                            style: const TextStyle(
+                                                              fontWeight: FontWeight.w200,
+                                                              fontSize: 12,
+                                                              letterSpacing: 0.27,
+                                                              color: AppTheme.grey,
+                                                            ),
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -201,34 +219,37 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                                                 ],
                                               ),
                                             ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Indexed(
+                                      index: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 24, bottom: 24, left: 16),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                                                border: Border.all(color: AppTheme.black.withOpacity(0.2)),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                                                child: AspectRatio(
+                                                  aspectRatio: 1.0,
+                                                  child: Image.network(
+                                                    ApiConstants.baseUrl + item.product.imagePath,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 24, bottom: 24, left: 16),
-                                  child: Row(
-                                    children: <Widget>[
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                                          border: Border.all(color: AppTheme.black.withOpacity(0.2)),
-                                        ),
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                                          child: AspectRatio(
-                                            aspectRatio: 1.0,
-                                            child: Image.network(
-                                              ApiConstants.baseUrl + item.product.imagePath,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
                                 ),
                               ],
                             ),

@@ -19,6 +19,7 @@ dependencies:
   countup: ^0.1.4
   flutter_secure_storage: ^6.0.0
   flutter_snake_navigationbar: ^0.6.1
+  indexed: ^0.0.8
 
 dev_dependencies:
   flutter_test:
