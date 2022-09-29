@@ -62,6 +62,32 @@ class ApiItem {
     throw Exception('Failed to load Items');
   }
 
+  Future<GetItems> getItemsLiked({int? index = 0, int? limit = 4}) async {
+    await storage.write(key: 'apiToken', value: ApiConstants.apiToken);
+
+    final apiToken = await storage.read(key: 'apiToken');
+
+    if (apiToken == null) {
+      throw Exception('Failed to load Items');
+    }
+
+    debugPrint('GET ${ApiConstants.baseUrl}${ApiConstants.itemsLikedEndpoint}?index=$index&limit=$limit');
+
+    Response response = await get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.itemsLikedEndpoint}?index=$index&limit=$limit'),
+        headers: {'Content-Type': 'application/ld+json', 'Accept': 'application/ld+json', 'Authorization': apiToken});
+
+    debugPrint('getItemsLiked ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      GetItems model = itemsFromJson(
+        response.body.toString(),
+      );
+      return model;
+    }
+
+    throw Exception('Failed to load Items');
+  }
+
   void putItemLiked(int itemId, bool value) async {
     await storage.write(key: 'apiToken', value: ApiConstants.apiToken);
 

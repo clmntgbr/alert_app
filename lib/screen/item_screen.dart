@@ -40,6 +40,9 @@ class ItemScreenState extends State<ItemScreen> {
   }
 
   Color getLikeIconBackgroundColor(GetItem item) {
+    if (item.id == 0) {
+      return AppTheme.white;
+    }
     if (item.isLiked) {
       return AppTheme.secondaryColor;
     }
@@ -47,10 +50,38 @@ class ItemScreenState extends State<ItemScreen> {
   }
 
   Color getLikeIconColor(GetItem item) {
+    if (item.id == 0) {
+      return AppTheme.white;
+    }
     if (item.isLiked) {
       return AppTheme.white;
     }
     return AppTheme.secondaryColor;
+  }
+
+  Row getExpirationDate(GetItem item) {
+    if (item.id == 0) {
+      return Row();
+    }
+    return Row(
+      children: <Widget>[
+        Icon(
+          Icons.alarm_outlined,
+          color: AppTheme.grey.withOpacity(0.8),
+          size: 17,
+        ),
+        Text(
+          ' ${item.expirationDate}',
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontWeight: FontWeight.w200,
+            fontSize: 17,
+            letterSpacing: 0.27,
+            color: AppTheme.grey,
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -111,35 +142,17 @@ class ItemScreenState extends State<ItemScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                const Text(
-                                  '\$28.99',
+                                Text(
+                                  item.product.brand,
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w200,
-                                    fontSize: 22,
+                                    fontSize: 17,
                                     letterSpacing: 0.27,
-                                    color: AppTheme.secondaryColor,
+                                    color: AppTheme.grey,
                                   ),
                                 ),
-                                Row(
-                                  children: const <Widget>[
-                                    Text(
-                                      '4.3',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 22,
-                                        letterSpacing: 0.27,
-                                        color: AppTheme.grey,
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.star,
-                                      color: AppTheme.secondaryColor,
-                                      size: 24,
-                                    ),
-                                  ],
-                                )
+                                getExpirationDate(item),
                               ],
                             ),
                           ),

@@ -2,6 +2,7 @@ import 'package:alert_app/api/api_item.dart';
 import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/view/items_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../app_theme.dart';
 
@@ -21,6 +22,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late Future<GetItems> getItemsExpiredFirst;
   late Future<GetItems> getItemsExpiredSecond;
 
+  late Future<GetItems> getItemsLikedFirst;
+  late Future<GetItems> getItemsLikedSecond;
+
   @override
   void initState() {
     animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
@@ -29,6 +33,9 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     getItemsExpiredFirst = ApiItem().getItemsExpired();
     getItemsExpiredSecond = ApiItem().getItemsExpired(index: 4);
+
+    getItemsLikedFirst = ApiItem().getItemsLiked();
+    getItemsLikedSecond = ApiItem().getItemsLiked(index: 4);
 
     super.initState();
   }
@@ -58,11 +65,43 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 10.0, left: 18, right: 16),
-                        child: Text(
-                          'Produits bientôt expirés',
-                          textAlign: TextAlign.left,
-                          style: AppTheme.headline,
+                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Produits bientôt expirés',
+                              textAlign: TextAlign.left,
+                              style: AppTheme.headline,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppTheme.white,
+                                elevation: 0.0,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Tout voir',
+                                    style: GoogleFonts.lilitaOne(
+                                      color: AppTheme.secondaryColor,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 2.5,
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: AppTheme.secondaryColor,
+                                    size: 24.0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -74,11 +113,43 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 16),
-                        child: Text(
-                          'Produits expirés',
-                          textAlign: TextAlign.left,
-                          style: AppTheme.headline,
+                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Produits expirés',
+                              textAlign: TextAlign.left,
+                              style: AppTheme.headline,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppTheme.white,
+                                elevation: 0.0,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Tout voir',
+                                    style: GoogleFonts.lilitaOne(
+                                      color: AppTheme.secondaryColor,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 2.5,
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: AppTheme.secondaryColor,
+                                    size: 24.0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -87,6 +158,54 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     getCategoryUI(getItemsExpiredFirst, 0),
                     getCategoryUI(getItemsExpiredSecond, 4),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 18, right: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Produits favoris',
+                              textAlign: TextAlign.left,
+                              style: AppTheme.headline,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppTheme.white,
+                                elevation: 0.0,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Tout voir',
+                                    style: GoogleFonts.lilitaOne(
+                                      color: AppTheme.secondaryColor,
+                                      fontWeight: FontWeight.w100,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 2.5,
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward_ios_outlined,
+                                    color: AppTheme.secondaryColor,
+                                    size: 24.0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    getCategoryUI(getItemsLikedFirst, 0),
+                    getCategoryUI(getItemsLikedSecond, 4),
                     const SizedBox(
                       height: 90,
                     ),

@@ -123,7 +123,7 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                                                       child: Text(
                                                         item.product.name,
                                                         maxLines: 2,
-                                                        overflow: TextOverflow.ellipsis,
+                                                        overflow: TextOverflow.fade,
                                                         textAlign: TextAlign.left,
                                                         style: const TextStyle(
                                                           fontWeight: FontWeight.w600,
@@ -134,31 +134,19 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                                                       ),
                                                     ),
                                                   ),
-                                                  const Expanded(
-                                                    child: SizedBox(),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(right: 16, bottom: 0),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: <Widget>[
-                                                        Align(
-                                                          alignment: Alignment.centerLeft,
-                                                          child: Text(
-                                                            item.product.brand,
-                                                            maxLines: 1,
-                                                            overflow: TextOverflow.fade,
-                                                            textAlign: TextAlign.left,
-                                                            style: const TextStyle(
-                                                              fontWeight: FontWeight.w200,
-                                                              fontSize: 12,
-                                                              letterSpacing: 0.27,
-                                                              color: AppTheme.grey,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
+                                                  Align(
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Text(
+                                                      item.product.brand,
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.fade,
+                                                      textAlign: TextAlign.left,
+                                                      style: const TextStyle(
+                                                        fontWeight: FontWeight.w200,
+                                                        fontSize: 12,
+                                                        letterSpacing: 0.27,
+                                                        color: AppTheme.grey,
+                                                      ),
                                                     ),
                                                   ),
                                                   Padding(

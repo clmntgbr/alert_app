@@ -6,6 +6,7 @@ class ApiConstants {
   static String itemsEndpoint = '/api/items';
   static String itemsExpireSoonEndpoint = '/api/items/expire_soon';
   static String itemsExpiredEndpoint = '/api/items/expired';
+  static String itemsLikedEndpoint = '/api/items/liked';
   static String productEanEndpoint = '/api/product';
   static String authenticateEndpoint = '/api/authenticate';
   static String apiToken =
