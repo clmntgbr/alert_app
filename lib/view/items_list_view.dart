@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 
 class ItemsListView extends StatefulWidget {
-  ItemsListView({Key? key, required this.getItems, required this.callIndex}) : super(key: key);
+  ItemsListView({Key? key, required this.getItems}) : super(key: key);
 
-  int callIndex;
   late Future<GetItems> getItems;
 
   @override

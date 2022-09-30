@@ -108,8 +108,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const SizedBox(
                       height: 16,
                     ),
-                    getCategoryUI(getItemsExpireSoonFirst, 0),
-                    getCategoryUI(getItemsExpireSoonSecond, 4),
+                    getCategoryUI(getItemsExpireSoonFirst),
+                    getCategoryUI(getItemsExpireSoonSecond),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -156,8 +156,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const SizedBox(
                       height: 16,
                     ),
-                    getCategoryUI(getItemsExpiredFirst, 0),
-                    getCategoryUI(getItemsExpiredSecond, 4),
+                    getCategoryUI(getItemsExpiredFirst),
+                    getCategoryUI(getItemsExpiredSecond),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -204,8 +204,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const SizedBox(
                       height: 16,
                     ),
-                    getCategoryUI(getItemsLikedFirst, 0),
-                    getCategoryUI(getItemsLikedSecond, 4),
+                    getCategoryUI(getItemsLikedFirst),
+                    getCategoryUI(getItemsLikedSecond),
                     const SizedBox(
                       height: 90,
                     ),
@@ -219,13 +219,12 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget getCategoryUI(Future<GetItems> getItems, int index) {
+  Widget getCategoryUI(Future<GetItems> getItems) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ItemsListView(
-          callIndex: index,
           getItems: getItems,
         ),
       ],
