@@ -1,5 +1,6 @@
 import 'package:alert_app/api/api_item.dart';
 import 'package:alert_app/model/get_items.dart';
+import 'package:alert_app/screen/items_screen.dart';
 import 'package:alert_app/view/items_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,7 +80,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 backgroundColor: AppTheme.white,
                                 elevation: 0.0,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => ItemsScreen(),
+                                  ),
+                                );
+                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -108,8 +116,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const SizedBox(
                       height: 16,
                     ),
-                    getCategoryUI(getItemsExpireSoonFirst),
-                    getCategoryUI(getItemsExpireSoonSecond),
+                    getInlineItems(getItemsExpireSoonFirst),
+                    getInlineItems(getItemsExpireSoonSecond),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -156,8 +164,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const SizedBox(
                       height: 16,
                     ),
-                    getCategoryUI(getItemsExpiredFirst),
-                    getCategoryUI(getItemsExpiredSecond),
+                    getInlineItems(getItemsExpiredFirst),
+                    getInlineItems(getItemsExpiredSecond),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -204,8 +212,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     const SizedBox(
                       height: 16,
                     ),
-                    getCategoryUI(getItemsLikedFirst),
-                    getCategoryUI(getItemsLikedSecond),
+                    getInlineItems(getItemsLikedFirst),
+                    getInlineItems(getItemsLikedSecond),
                     const SizedBox(
                       height: 90,
                     ),
@@ -219,7 +227,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget getCategoryUI(Future<GetItems> getItems) {
+  Widget getInlineItems(Future<GetItems> getItems) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
