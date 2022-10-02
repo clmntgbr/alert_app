@@ -97,7 +97,7 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                             height: double.infinity,
                             child: Stack(
                               children: <Widget>[
-                                Indexer(
+                                Indexer(    
                                   children: [
                                     Indexed(
                                       index: 10,

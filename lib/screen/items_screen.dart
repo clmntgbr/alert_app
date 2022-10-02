@@ -4,6 +4,7 @@ import 'package:alert_app/constants.dart';
 import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/screen/item_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:indexed/indexed.dart';
 
 class ItemsScreen extends StatefulWidget {
   const ItemsScreen({super.key});
@@ -69,8 +70,8 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
                                 scrollDirection: Axis.vertical,
                                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  mainAxisSpacing: 32.0,
-                                  crossAxisSpacing: 32.0,
+                                  mainAxisSpacing: 10.0,
+                                  crossAxisSpacing: 10.0,
                                   childAspectRatio: 0.8,
                                 ),
                                 children: List<Widget>.generate(
@@ -111,122 +112,164 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
                                                 );
                                               },
                                               child: SizedBox(
-                                                height: 400,
-                                                child: Stack(
-                                                  alignment: AlignmentDirectional.bottomCenter,
-                                                  children: <Widget>[
-                                                    Column(
-                                                      children: <Widget>[
-                                                        Expanded(
-                                                          child: Container(
-                                                            height: 400,
-                                                            decoration: BoxDecoration(
-                                                              color: HexColor('#F8FAFB'),
-                                                              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                                                              border: Border.all(color: AppTheme.notWhite),
-                                                            ),
-                                                            child: Column(
-                                                              children: <Widget>[
-                                                                Expanded(
+                                                height: 280,
+                                                child: Indexer(
+                                                  children: [
+                                                    Indexed(
+                                                      index: 10,
+                                                      child: Positioned(
+                                                        right: 0,
+                                                        top: 70,
+                                                        child: Container(
+                                                          decoration: const BoxDecoration(
+                                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                                            color: AppTheme.transparent,
+                                                          ),
+                                                          alignment: Alignment.center,
+                                                          width: 40,
+                                                          height: 40,
+                                                          padding: const EdgeInsets.all(0),
+                                                          child: IconButton(
+                                                              icon: const Icon(
+                                                                Icons.delete_outline_rounded,
+                                                                color: AppTheme.secondaryColor,
+                                                                size: 26,
+                                                              ),
+                                                              onPressed: () {
+                                                                ApiItem().deleteItem(item.id);
+                                                                setState(() {
+                                                                  totalItems--;
+                                                                  item.isDeleted = true;
+                                                                });
+                                                              }),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Indexed(
+                                                      index: 2,
+                                                      child: Stack(
+                                                        alignment: AlignmentDirectional.bottomCenter,
+                                                        children: <Widget>[
+                                                          Column(
+                                                            children: <Widget>[
+                                                              Expanded(
+                                                                child: Container(
+                                                                  height: 400,
+                                                                  decoration: BoxDecoration(
+                                                                    color: HexColor('#F8FAFB'),
+                                                                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                                                                    border: Border.all(color: AppTheme.notWhite),
+                                                                  ),
                                                                   child: Column(
                                                                     children: <Widget>[
-                                                                      Align(
-                                                                        alignment: Alignment.centerLeft,
-                                                                        child: Padding(
-                                                                          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                                                                          child: Text(
-                                                                            item.product.name + item.product.name,
-                                                                            maxLines: 3,
-                                                                            overflow: TextOverflow.fade,
-                                                                            textAlign: TextAlign.left,
-                                                                            style: const TextStyle(
-                                                                              fontWeight: FontWeight.w600,
-                                                                              fontSize: 16,
-                                                                              letterSpacing: 0.27,
-                                                                              color: AppTheme.darkerText,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets.only(top: 8, left: 10, right: 10),
-                                                                        child: Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      Expanded(
+                                                                        child: Column(
                                                                           children: <Widget>[
-                                                                            Text(
-                                                                              item.product.brand,
-                                                                              maxLines: 1,
-                                                                              overflow: TextOverflow.fade,
-                                                                              textAlign: TextAlign.left,
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w200,
-                                                                                fontSize: 12,
-                                                                                letterSpacing: 0.27,
-                                                                                color: AppTheme.grey,
+                                                                            Align(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                                                                                child: Text(
+                                                                                  item.product.name + item.product.name,
+                                                                                  maxLines: 3,
+                                                                                  overflow: TextOverflow.fade,
+                                                                                  textAlign: TextAlign.left,
+                                                                                  style: const TextStyle(
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontSize: 16,
+                                                                                    letterSpacing: 0.27,
+                                                                                    color: AppTheme.darkerText,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: <Widget>[
+                                                                                  Text(
+                                                                                    item.product.brand,
+                                                                                    maxLines: 1,
+                                                                                    overflow: TextOverflow.fade,
+                                                                                    textAlign: TextAlign.left,
+                                                                                    style: const TextStyle(
+                                                                                      fontWeight: FontWeight.w200,
+                                                                                      fontSize: 12,
+                                                                                      letterSpacing: 0.27,
+                                                                                      color: AppTheme.grey,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
+                                                                              child: Row(
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: <Widget>[
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(top: 3.0),
+                                                                                    child: Icon(
+                                                                                      Icons.alarm_outlined,
+                                                                                      size: 14,
+                                                                                      color: AppTheme.grey.withOpacity(0.8),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Padding(
+                                                                                    padding: const EdgeInsets.only(top: 4.0, left: 2),
+                                                                                    child: Text(
+                                                                                      '${item.expirationDate}',
+                                                                                      maxLines: 1,
+                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                      style: TextStyle(
+                                                                                          fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
                                                                               ),
                                                                             ),
                                                                           ],
                                                                         ),
                                                                       ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets.only(top: 8, left: 10, right: 10),
-                                                                        child: Row(
-                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                                          children: <Widget>[
-                                                                            Text(
-                                                                              item.product.brand,
-                                                                              maxLines: 1,
-                                                                              overflow: TextOverflow.fade,
-                                                                              textAlign: TextAlign.left,
-                                                                              style: const TextStyle(
-                                                                                fontWeight: FontWeight.w200,
-                                                                                fontSize: 12,
-                                                                                letterSpacing: 0.27,
-                                                                                color: AppTheme.grey,
-                                                                              ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
+                                                                      const SizedBox(
+                                                                        width: 90,
                                                                       ),
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                const SizedBox(
-                                                                  width: 90,
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 90,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(top: 50, right: 16, left: 16),
+                                                            child: Container(
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                                                                boxShadow: <BoxShadow>[
+                                                                  BoxShadow(
+                                                                      color: AppTheme.grey.withOpacity(0.2),
+                                                                      offset: const Offset(0.0, 0.0),
+                                                                      blurRadius: 6.0),
+                                                                ],
+                                                              ),
+                                                              child: ClipRRect(
+                                                                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                                                                child: AspectRatio(
+                                                                  aspectRatio: 1.28,
+                                                                  child: Image.network(
+                                                                    ApiConstants.baseUrl + item.product.imagePath,
+                                                                    fit: BoxFit.cover,
+                                                                  ),
                                                                 ),
-                                                              ],
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 90,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(top: 50, right: 16, left: 16),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                                                          boxShadow: <BoxShadow>[
-                                                            BoxShadow(
-                                                                color: AppTheme.grey.withOpacity(0.2),
-                                                                offset: const Offset(0.0, 0.0),
-                                                                blurRadius: 6.0),
-                                                          ],
-                                                        ),
-                                                        child: ClipRRect(
-                                                          borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                                                          child: AspectRatio(
-                                                            aspectRatio: 1.28,
-                                                            child: Image.network(
-                                                              ApiConstants.baseUrl + item.product.imagePath,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ],
