@@ -63,6 +63,11 @@ class ItemScreenState extends State<ItemScreen> {
     if (item.id == 0) {
       return Row();
     }
+
+    if (item.expirationDate == null) {
+      return Row();
+    }
+
     return Row(
       children: <Widget>[
         Icon(

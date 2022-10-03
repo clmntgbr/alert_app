@@ -25,6 +25,40 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
     super.initState();
   }
 
+  Padding getExpirationDate(Item item) {
+    if (item.expirationDate != null) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 3.0),
+              child: Icon(
+                Icons.alarm_outlined,
+                size: 14,
+                color: AppTheme.grey.withOpacity(0.8),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0, left: 2),
+              child: Text(
+                '${item.expirationDate}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return const Padding(
+      padding: EdgeInsets.all(0),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -116,36 +150,6 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
                                                 child: Indexer(
                                                   children: [
                                                     Indexed(
-                                                      index: 10,
-                                                      child: Positioned(
-                                                        right: 0,
-                                                        top: 70,
-                                                        child: Container(
-                                                          decoration: const BoxDecoration(
-                                                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                            color: AppTheme.transparent,
-                                                          ),
-                                                          alignment: Alignment.center,
-                                                          width: 40,
-                                                          height: 40,
-                                                          padding: const EdgeInsets.all(0),
-                                                          child: IconButton(
-                                                              icon: const Icon(
-                                                                Icons.delete_outline_rounded,
-                                                                color: AppTheme.secondaryColor,
-                                                                size: 26,
-                                                              ),
-                                                              onPressed: () {
-                                                                ApiItem().deleteItem(item.id);
-                                                                setState(() {
-                                                                  totalItems--;
-                                                                  item.isDeleted = true;
-                                                                });
-                                                              }),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Indexed(
                                                       index: 2,
                                                       child: Stack(
                                                         alignment: AlignmentDirectional.bottomCenter,
@@ -170,7 +174,7 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                                                                                 child: Text(
-                                                                                  item.product.name + item.product.name,
+                                                                                  item.product.name,
                                                                                   maxLines: 3,
                                                                                   overflow: TextOverflow.fade,
                                                                                   textAlign: TextAlign.left,
@@ -204,32 +208,7 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
                                                                                 ],
                                                                               ),
                                                                             ),
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
-                                                                              child: Row(
-                                                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                children: <Widget>[
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsets.only(top: 3.0),
-                                                                                    child: Icon(
-                                                                                      Icons.alarm_outlined,
-                                                                                      size: 14,
-                                                                                      color: AppTheme.grey.withOpacity(0.8),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsets.only(top: 4.0, left: 2),
-                                                                                    child: Text(
-                                                                                      '${item.expirationDate}',
-                                                                                      maxLines: 1,
-                                                                                      overflow: TextOverflow.ellipsis,
-                                                                                      style: TextStyle(
-                                                                                          fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
+                                                                            getExpirationDate(item),
                                                                           ],
                                                                         ),
                                                                       ),

@@ -31,6 +31,41 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
     super.dispose();
   }
 
+  Indexed getExpirationDate(Item item) {
+    if (item.expirationDate != null) {
+      return Indexed(
+        index: 2,
+        child: Positioned(
+          left: (280 - 48) / 2,
+          bottom: 10,
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 3.0),
+                child: Icon(
+                  Icons.alarm_outlined,
+                  size: 14,
+                  color: AppTheme.grey.withOpacity(0.8),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0, left: 2),
+                child: Text(
+                  '${item.expirationDate}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Indexed(child: Container());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,10 +94,10 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
             width: double.infinity,
             child: ListView.builder(
               padding: const EdgeInsets.only(top: 0, bottom: 0, right: 16, left: 16),
-              itemCount: snapshot.data?.totalItems,
+              itemCount: totalItems,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                final int count = snapshot.data?.totalItems ?? 0;
+                final int count = totalItems;
                 final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
                     .animate(CurvedAnimation(parent: animationController!, curve: Interval((1 / count) * index, 1.0, curve: Curves.fastOutSlowIn)));
                 animationController?.forward();
@@ -97,7 +132,7 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                             height: double.infinity,
                             child: Stack(
                               children: <Widget>[
-                                Indexer(    
+                                Indexer(
                                   children: [
                                     Indexed(
                                       index: 10,
@@ -129,34 +164,7 @@ class ItemsListViewState extends State<ItemsListView> with TickerProviderStateMi
                                         ),
                                       ),
                                     ),
-                                    Indexed(
-                                      index: 2,
-                                      child: Positioned(
-                                        left: (280 - 48) / 2,
-                                        bottom: 10,
-                                        child: Row(
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 3.0),
-                                              child: Icon(
-                                                Icons.alarm_outlined,
-                                                size: 14,
-                                                color: AppTheme.grey.withOpacity(0.8),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 4.0, left: 2),
-                                              child: Text(
-                                                '${item.expirationDate}',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                    getExpirationDate(item),
                                     Indexed(
                                       index: 1,
                                       child: Row(
