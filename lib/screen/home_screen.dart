@@ -84,7 +84,7 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (BuildContext context) => ItemsScreen(),
+                                    builder: (BuildContext context) => const ItemsScreen(type: 'get_items_expire_soon'),
                                   ),
                                 );
                               },
@@ -135,7 +135,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 backgroundColor: AppTheme.white,
                                 elevation: 0.0,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => const ItemsScreen(type: 'get_items_expired'),
+                                  ),
+                                );
+                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -183,7 +190,14 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 backgroundColor: AppTheme.white,
                                 elevation: 0.0,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) => const ItemsScreen(type: 'get_items_liked'),
+                                  ),
+                                );
+                              },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [

@@ -1,13 +1,16 @@
 import 'package:alert_app/api/api_item.dart';
 import 'package:alert_app/app_theme.dart';
 import 'package:alert_app/constants.dart';
+import 'package:alert_app/main.dart';
 import 'package:alert_app/model/get_items.dart';
 import 'package:alert_app/screen/item_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:indexed/indexed.dart';
 
 class ItemsScreen extends StatefulWidget {
-  const ItemsScreen({super.key});
+  const ItemsScreen({super.key, required this.type});
+
+  final String type;
 
   @override
   ItemsScreenState createState() => ItemsScreenState();
@@ -20,43 +23,9 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
 
   @override
   void initState() {
-    getItems = ApiItem().getItemsLiked(limit: 100);
+    getItems = getItemsCollection(widget.type);
     animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
     super.initState();
-  }
-
-  Padding getExpirationDate(Item item) {
-    if (item.expirationDate != null) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 3.0),
-              child: Icon(
-                Icons.alarm_outlined,
-                size: 14,
-                color: AppTheme.grey.withOpacity(0.8),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 4.0, left: 2),
-              child: Text(
-                '${item.expirationDate}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return const Padding(
-      padding: EdgeInsets.all(0),
-    );
   }
 
   @override
@@ -64,6 +33,30 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
     return Container(
       color: AppTheme.white,
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            getItemsTitle(widget.type),
+            textAlign: TextAlign.left,
+            style: AppTheme.headline,
+          ),
+          backgroundColor: AppTheme.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: AppTheme.secondaryColor,
+              size: 20,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const App(),
+                ),
+              );
+            },
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Column(
           children: <Widget>[
@@ -104,7 +97,7 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
                                 scrollDirection: Axis.vertical,
                                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  mainAxisSpacing: 10.0,
+                                  mainAxisSpacing: 20.0,
                                   crossAxisSpacing: 10.0,
                                   childAspectRatio: 0.8,
                                 ),
@@ -275,5 +268,71 @@ class ItemsScreenState extends State<ItemsScreen> with TickerProviderStateMixin 
         ),
       ),
     );
+  }
+
+  Padding getExpirationDate(Item item) {
+    if (item.expirationDate != null) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 2, left: 10, right: 10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(top: 3.0),
+              child: Icon(
+                Icons.alarm_outlined,
+                size: 14,
+                color: AppTheme.grey.withOpacity(0.8),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0, left: 2),
+              child: Text(
+                '${item.expirationDate}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 14, color: AppTheme.grey.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return const Padding(
+      padding: EdgeInsets.all(0),
+    );
+  }
+
+  Future<GetItems> getItemsCollection(String type) {
+    if (type == 'get_items_liked') {
+      return ApiItem().getItemsLiked(limit: 100);
+    }
+
+    if (type == 'get_items_expired') {
+      return ApiItem().getItemsExpired(limit: 100);
+    }
+
+    if (type == 'get_items_expire_soon') {
+      return ApiItem().getItemsExpireSoon(limit: 100);
+    }
+
+    return ApiItem().getItems();
+  }
+
+  String getItemsTitle(String type) {
+    if (type == 'get_items_liked') {
+      return 'Produits favoris';
+    }
+
+    if (type == 'get_items_expired') {
+      return 'Produits expirés';
+    }
+
+    if (type == 'get_items_expire_soon') {
+      return 'Produits bientôt expirés';
+    }
+
+    return 'Produits';
   }
 }
